@@ -25,8 +25,9 @@ def main():
         end = period["TIME_TO_ISO"]
         title = period["MODULE_NAME"]
         place = period["ROOM"]
+        mod_id = period["MODID"]
 
-        insert_new_event(start, end, title, place, credentials)
+        insert_new_event(start, end, title, mod_id, place, credentials)
 
 
 def get_timetable(intake, grouping):
@@ -57,13 +58,13 @@ def get_credentials():
     return credentials
 
 
-def insert_new_event(time_from, time_to, class_title, room, credentials):
+def insert_new_event(time_from, time_to, class_title, mod_id, room, credentials):
     service = build("calendar", "v3", credentials=credentials)
 
     event = {
-        'summary': class_title,
-        'location': 'Asia pacific university of innovation and technology',
-        'description': room,
+        'summary': mod_id,
+        'location': room,
+        'description': class_title,
         'start': {
             'dateTime': time_from,
         },
