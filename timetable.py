@@ -11,15 +11,16 @@ all_timetables = requests.get("https://s3-ap-southeast-1.amazonaws.com/open-ws/w
 SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
 
 my_info = {
-    "INTAKE": input("please enter your intake: "),
-    "GROUPING": input("please enter your grouping: ")
+    "INTAKE": "",
+    "GROUPING":  "",
 }
-calendar_id = input("please enter your calendar id: ")
+calendar_id = "",
 
 
 def main():
     my_timetable = get_timetable(my_info["INTAKE"], my_info["GROUPING"])
     credentials = get_credentials()
+
     for period in my_timetable:
         start = period["TIME_FROM_ISO"]
         end = period["TIME_TO_ISO"]
@@ -78,4 +79,6 @@ def insert_new_event(time_from, time_to, class_title, mod_id, room, credentials)
 
 
 if __name__ == '__main__':
+    my_info["INTAKE"] = input("Please enter your intake code: ")
+    my_info["GROUPING"] = input("Please enter your group number (G1 if none): ")
     main()
