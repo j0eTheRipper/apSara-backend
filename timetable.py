@@ -81,4 +81,5 @@ def insert_new_event(time_from, time_to, class_title, mod_id, room, credentials)
 if __name__ == '__main__':
     my_info["INTAKE"] = input("Please enter your intake code: ")
     my_info["GROUPING"] = input("Please enter your group number (G1 if none): ")
+    calendar_id = input("Please enter your calendar ID: ")
     main()
