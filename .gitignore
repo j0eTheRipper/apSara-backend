@@ -2,4 +2,4 @@
 /env
 /__pycache__
 token.json
-credentials.json
+creds.json
