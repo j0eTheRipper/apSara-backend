@@ -13,12 +13,13 @@ SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
 my_info = {
     "INTAKE": "",
     "GROUPING":  "",
+    "IGNORED": [],
 }
 calendar_id = "",
 
 
 def main():
-    my_timetable = get_timetable(my_info["INTAKE"], my_info["GROUPING"])
+    my_timetable = get_timetable(my_info["INTAKE"], my_info["GROUPING"], my_info["IGNORED"])
     credentials = get_credentials()
 
     for period in my_timetable:
@@ -31,13 +32,18 @@ def main():
         insert_new_event(start, end, title, mod_id, place, credentials)
 
 
-def get_timetable(intake, grouping):
+def get_timetable(intake, grouping, ignore_modules=[]):
     my_timetables = []
 
     for timetable in all_timetables:
         is_my_timetable = intake == timetable["INTAKE"] and grouping == timetable["GROUPING"]
         is_later = dt.today().date() <= dt.strptime(timetable["DATESTAMP_ISO"], '%Y-%m-%d').date()
-        if is_my_timetable and is_later:
+        is_ignored = False
+        for mod in ignore_modules:
+            if mod in timetable["MODID"]:
+                is_ignored = True
+                break
+        if is_my_timetable and is_later and not is_ignored:
             my_timetables.append(timetable)
 
     return my_timetables
@@ -81,5 +87,6 @@ def insert_new_event(time_from, time_to, class_title, mod_id, room, credentials)
 if __name__ == '__main__':
     my_info["INTAKE"] = input("Please enter your intake code: ")
     my_info["GROUPING"] = input("Please enter your group number (G1 if none): ")
+    my_info["IGNORED"] = input("Please enter modules dont want to add separated by hyphens").upper().split("-")
     calendar_id = input("Please enter your calendar ID: ")
     main()
