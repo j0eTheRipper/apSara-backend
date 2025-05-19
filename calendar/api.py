@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import timetable
 
 
@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 @app.route("/get_timetable/<intake_code>/<group_number>")
 def get_timetable(intake_code, group_number):
-    class_list = timetable.get_timetable(intake_code, group_number)
+    ignored_modules = request.args.getlist("ignored")
+    print (ignored_modules)
+    class_list = timetable.get_timetable(intake_code, group_number, ignored_modules)
     return jsonify(class_list)
 
 
