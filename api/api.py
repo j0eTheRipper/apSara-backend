@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import timetable
+from timetable import timetable
 
 
 app = Flask(__name__)
