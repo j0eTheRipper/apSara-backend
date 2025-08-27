@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request
 from timetable import timetable
 
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route("/get_timetable/<intake_code>/<group_number>")
 def get_timetable(intake_code, group_number):
