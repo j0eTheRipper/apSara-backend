@@ -1,0 +1,28 @@
+
+{
+    "users": [
+
+        {
+            "id": 1,
+            "apkey": "TP012345",
+            "password": "User1@123",
+            "role": "Student"
+        },
+        {
+            "id": 2,
+            "apkey": "TP023456",
+            "password": "User2@123",
+            "role": "Student"
+        },
+        {
+            "id": 3,
+            "apkey": "TP034567",
+            "password": "User3@123",
+            "role": "Staff"
+        }
+
+    ]
+}
+
+
+
