@@ -2,7 +2,7 @@ from flask import Blueprint, send_from_directory, make_response, Response
 import pathlib
 
 assets_bp = Blueprint("assets", __name__, url_prefix="/asset")
-ASSETS_DIR = pathlib.Path(__file__).resolve().parent / "assets"
+ASSETS_DIR = pathlib.Path(__file__).resolve().parent / "assets" / "campusNavigation"
 
 def secure_asset(response: Response):
     # _ = response.headers.setdefault(
