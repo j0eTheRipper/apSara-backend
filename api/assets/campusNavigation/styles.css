@@ -1,0 +1,1002 @@
+/* ===== CSS ROOT VARIABLES ===== */
+:root {
+  /* Colors - Primary Palette */
+  --color-white: #ffffff;
+  --color-black: #000;
+  --color-transparent: transparent;
+  
+  /* Colors - Grays */
+  --color-gray-light: #e2e8f0;
+  --color-gray-medium: #94a3b8;
+  --color-gray-dark: #6c757d;
+  --color-gray-darker: #545b62;
+  --color-navy-light: #2a3441;
+  --color-navy-dark: #1e2832;
+  
+  /* Colors - Blues */
+  --color-blue-primary: #007bff;
+  --color-blue-dark: #0056b3;
+  --color-blue-accent: #60a5fa;
+  --color-purple-light: #4a5fbc;
+  --color-purple-primary: #6b46c1;
+  --color-purple-medium: #5a6fcf;
+  --color-purple-dark: #7c3aed;
+  
+  /* Colors - Theme Colors */
+  --color-red-primary: #dc3545;
+  --color-red-dark: #c82333;
+  --color-yellow-primary: #ffc107;
+  --color-yellow-dark: #ff8f00;
+  --color-green-primary: #28a745;
+  --color-green-dark: #1e7e34;
+  --color-purple-vibrant: #6610f2;
+  --color-purple-vibrant-dark: #520dc2;
+  --color-cyan-primary: #17a2b8;
+  --color-cyan-dark: #138496;
+  --color-pink-primary: #e83e8c;
+  --color-pink-dark: #d91a72;
+
+
+  /* 🔵 Hotspot - Navigation */
+  --hotspot-navigation-primary: #FF2701;     
+  --hotspot-navigation-base:    rgba(255, 38, 0, 0.56);     
+  --hotspot-navigation-dark:    rgba(255, 38, 0, 0.736);
+
+  /* 🏢 Hotspot - Building */
+   --hotspot-building-primary: rgba(36, 57, 139, 0.5);
+  --hotspot-building-base:    rgba(36, 57, 139, 0.5);
+  --hotspot-building-dark:    rgba(36, 57, 139, 0.84);
+
+  /* 📚 Hotspot - Library */
+   --hotspot-library-primary: rgba(97, 78, 193, 0.63);
+  --hotspot-library-base:    rgba(97, 78, 193, 0.63);
+  --hotspot-library-dark:    rgba(97, 78, 193, 0.84);
+
+  /* ℹ️ Hotspot - Info */
+  --hotspot-info-primary: rgba(0, 147, 138, 0.77);
+  --hotspot-info-base:    rgba(0, 147, 138, 0.77);
+  --hotspot-info-dark:    rgba(0, 147, 138, 0.84);
+
+  /* 🛠️ Hotspot - Admin */  
+   --hotspot-admin-primary: rgba(136, 14, 12, 0.61);
+  --hotspot-admin-base:   rgba(136, 14, 12, 0.61);
+  --hotspot-admin-dark:    rgba(136, 14, 12, 0.84);
+
+  /* 🏥 Hotspot - Clinic */ 
+    --hotspot-clinic-primary: rgba(34, 179, 242, 0.7);
+  --hotspot-clinic-base:    rgba(34, 179, 242, 0.7);
+  --hotspot-clinic-dark:   rgba(34, 180, 242, 0.84);
+
+  /* 🛗 Hotspot - Elevator */
+  --hotspot-elevator-primary: rgba(2, 176, 32, 0.67);
+  --hotspot-elevator-base:     rgba(2, 176, 32, 0.67);
+  --hotspot-elevator-dark:    rgba(2, 176, 31, 0.84);
+
+  /* 🧗 Hotspot - Stairs */
+  --hotspot-stairs-primary: rgba(2, 176, 32, 0.67);
+  --hotspot-stairs-base:     rgba(2, 176, 32, 0.67);
+  --hotspot-stairs-dark:   rgba(2, 176, 31, 0.84);
+
+
+ /* 🏢 Hotspot - Reception */
+--hotspot-reception-primary: rgba(255, 152, 0, 0.7);
+--hotspot-reception-base:    rgba(255, 152, 0, 0.7);
+--hotspot-reception-dark:    rgba(255, 152, 0, 0.84);
+
+/* 👥 Hotspot - Student Services */
+--hotspot-studentservices-primary: rgba(33, 150, 243, 0.72);
+--hotspot-studentservices-base:    rgba(33, 150, 243, 0.72);
+--hotspot-studentservices-dark:    rgba(33, 150, 243, 0.84);
+
+/* 💰 Hotspot - Bursary */
+--hotspot-bursary-primary: rgba(255, 193, 7, 0.75);
+--hotspot-bursary-base:    rgba(255, 193, 7, 0.75);
+--hotspot-bursary-dark:    rgba(255, 193, 7, 0.84);
+
+/* 🍽️ Hotspot - Canteen */
+--hotspot-canteen-primary: rgba(56, 142, 60, 0.73);
+--hotspot-canteen-base:    rgba(56, 142, 60, 0.73);
+--hotspot-canteen-dark:    rgba(56, 142, 60, 0.84);
+
+/* 🏛️ Hotspot - Atrium */
+--hotspot-atrium-primary: rgba(245, 245, 220, 0.69);
+--hotspot-atrium-base:    rgba(245, 245, 220, 0.69);
+--hotspot-atrium-dark:    rgba(245, 245, 220, 0.84);
+
+/* 💪 Hotspot - Gym */
+--hotspot-gym-primary: rgba(117, 117, 117, 0.71);
+--hotspot-gym-base:    rgba(117, 117, 117, 0.71);
+--hotspot-gym-dark:    rgba(117, 117, 117, 0.84);
+
+/* 🏠 Hotspot - Accommodations */
+--hotspot-accommodations-primary: rgba(0, 188, 212, 0.74);
+--hotspot-accommodations-base:    rgba(0, 188, 212, 0.74);
+--hotspot-accommodations-dark:    rgba(0, 188, 212, 0.84);
+
+/* 🛒 Hotspot - Bila Bila Mart */
+--hotspot-bilamart-primary: rgba(233, 30, 99, 0.76);
+--hotspot-bilamart-base:    rgba(233, 30, 99, 0.76);
+--hotspot-bilamart-dark:    rgba(233, 30, 99, 0.84);
+
+/* 📄 Hotspot - Visa Center */
+--hotspot-visacenter-primary: rgba(63, 81, 181, 0.68);
+--hotspot-visacenter-base:    rgba(63, 81, 181, 0.68);
+--hotspot-visacenter-dark:    rgba(63, 81, 181, 0.84);
+
+  
+  /* Font Sizes */
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 5px;
+  --border-radius-lg: 8px;
+  --border-radius-xl: 20px;
+  --border-radius-xxl: 24px;
+  
+  /* Dimensions */
+  --hotspot-size: 25px;
+  --nav-panel-width: 730px;
+  --nav-panel-height: 100px;
+  
+  /* Font Family */
+  --font-family-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-icons: "bootstrap-icons";
+  
+  /* Shadows */
+  --shadow-panel: 0 -8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-button: 0 4px 12px rgba(74, 95, 188, 0.3);
+  --shadow-button-hover: 0 6px 16px rgba(74, 95, 188, 0.4);
+  --shadow-button-active: 0 2px 8px rgba(74, 95, 188, 0.3);
+  --shadow-tooltip: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-hotspot: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-tooltip-hover: 0 6px 20px rgba(0, 0, 0, 0.3);
+
+  --hotspot-navigation-color: rgba(255, 38, 0, 0.56);
+  --hotspot-building-color: rgba(36, 57, 139, 0.5);
+  --hotspot-library-color: rgba(97, 78, 193, 0.63);;
+  --hotspot-info-color:rgba(0, 147, 138, 0.77);
+  --hotspot-admin-color: rgba(136, 14, 12, 0.61);
+  --hotspot-clinic-color: rgba(34, 179, 242, 0.7);
+  --hotspot-elevator-color:  rgba(2, 176, 32, 0.67);
+  --hotspot-stairs-color:  rgba(2, 176, 32, 0.67);
+  
+}
+
+/* ===== BASE STYLES ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: var(--font-family-base);
+  background: var(--color-black);
+}
+
+#panorama {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ===== NAVIGATION PANEL STYLES ===== */
+.navigation-panel {
+  position: fixed;
+  bottom: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--nav-panel-width);
+  height: var(--nav-panel-height);
+  background: linear-gradient(135deg, var(--color-navy-light) 0%, var(--color-navy-dark) 100%);
+  border-radius: var(--border-radius-xxl);
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: none;
+}
+
+/* Panel Title Styles */
+.navigation-panel h3 {
+  font-family: var(--font-family-system);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-white);
+  margin: 0;
+  letter-spacing: 0.02em;
+  min-width: 140px;
+  display: flex;
+  justify-content: center;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-medium);
+  font-weight: 500;
+  margin-top: 4px;
+  text-align: center;
+  font-family: var(--font-family-system);
+}
+
+.navigation-panel .title-container, 
+.navigation-panel #navigationContent, 
+.navigation-panel .back-menu-container {
+  transition: color 0.3s ease, background-color 0.3s ease;
+  width: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 130px;
+}
+
+/* Navigation Content Container */
+#navigationContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 20px;
+  font-family: var(--font-family-system);
+  transition: opacity 0.2s ease;
+}
+
+.navigation-panel.updating #navigationContent {
+  opacity: 0.5;
+}
+
+/* Location and Destination Info Styles */
+.location-info {
+  font-size: var(--font-size-md);
+  color: var(--color-gray-light);
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin-top: -2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.location-info strong {
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.destination-info {
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.destination-info strong {
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+/* Explore Mode Styles */
+.explore-mode {
+  font-size: var(--font-size-base);
+  color: var(--color-blue-accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.click-to-navigate {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-medium);
+  opacity: 0.8;
+}
+
+/* Back Button Styles */
+.full-rounded {
+  background: linear-gradient(135deg, var(--color-purple-light) 0%, var(--color-purple-primary) 100%);
+  border: none;
+  border-radius: var(--border-radius-xl);
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-button);
+}
+
+.full-rounded:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-button-hover);
+  background: linear-gradient(135deg, var(--color-purple-medium) 0%, var(--color-purple-dark) 100%);
+}
+
+.full-rounded:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-button-active);
+}
+
+.back-button {
+  display: block;
+  padding: 12px 20px;
+  font-family: var(--font-family-system);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  color: var(--color-white);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.back-button:hover {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+/* ===== HOTSPOT ICON STYLES ===== */
+.hotspot-navigation,
+.hotspot-elevator,
+.hotspot-stairs,
+.hotspot-building,
+.hotspot-library,
+.hotspot-info,
+.hotspot-admin,
+.hotspot-clinic,
+.hotspot-reception,
+.hotspot-studentservices,
+.hotspot-bursary,
+.hotspot-canteen,
+.hotspot-atrium,
+.hotspot-gym,
+.hotspot-accommodations,
+.hotspot-bilamart,
+.hotspot-visacenter {
+  width: var(--hotspot-size) !important;
+  height: var(--hotspot-size) !important;
+  border-radius: var(--border-radius-md) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--color-white);
+}
+
+/* Individual Hotspot Themes */
+.hotspot-info {
+  background-color: var(--hotspot-info-color) !important;
+  border: 2px solid var(--hotspot-info-primary) !important;
+}
+
+.hotspot-info:before {
+  content: "\f431";
+  font-family: var(--font-family-icons);
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+}
+
+.hotspot-building {
+  background-color: var(--hotspot-building-color) !important;
+  border: 2px solid var(--hotspot-building-dark) !important;
+}
+
+.hotspot-building:before {
+  content: "\F1DD";
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+}
+
+.hotspot-navigation {
+  background: var(--hotspot-navigation-color) !important;
+  border: 2px solid var(--hotspot-navigation-primary) !important;
+  box-shadow: var(--shadow-hotspot) !important;
+}
+
+.hotspot-navigation:before {
+  content: "\f138";
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+  display: inline-block;
+  transform: rotate(-90deg);
+}
+
+.hotspot-elevator {
+  background-color: var(--hotspot-elevator-color) !important;
+  border: 2px solid var(--hotspot-elevator-primary) !important;
+}
+
+.hotspot-elevator:before {
+  content: "\F698";
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-clinic {
+  background-color: var(--hotspot-clinic-color) !important;
+  border: 2px solid var(--hotspot-clinic-primary) !important;
+}
+
+.hotspot-clinic:before {
+  content: "\F774";
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+}
+
+.hotspot-admin {
+  background-color: var(--hotspot-admin-color) !important;
+  border: 3px solid var(--hotspot-admin-primary) !important;
+}
+
+.hotspot-admin:before {
+  content: "\F6FD";
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+}
+
+.hotspot-stairs {
+  background-color: var(--hotspot-stairs-color) !important;
+  border: 2px solid var(--hotspot-stairs-primary) !important;
+}
+
+.hotspot-stairs:before {
+  content: "\F698";
+  font-family: var(--font-family-icons);
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+}
+
+.hotspot-library {
+  background-color: var(--hotspot-library-color) !important;
+  border: 2px solid var(--hotspot-library-primary) !important;
+}
+
+.hotspot-library:before {
+  content: "\F194";
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+  color: var(--color-white);
+}
+
+/* ===== TOOLTIP STYLES ===== */
+.pnlm-tooltip span {
+  position: absolute !important;
+  bottom: 140% !important;
+  left: 30% !important;
+  white-space: nowrap !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 1000;
+}
+
+.pnlm-tooltip span::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 10px 0 10px;
+  border-style: solid;
+  border-color: var(--color-cyan-primary) var(--color-transparent) var(--color-transparent) var(--color-transparent);
+  z-index: -1;
+}
+
+/* Common Tooltip Styles */
+.hotspot-info.pnlm-tooltip span, 
+.hotspot-building.pnlm-tooltip span, 
+.hotspot-navigation.pnlm-tooltip span, 
+.hotspot-elevator.pnlm-tooltip span, 
+.hotspot-stairs.pnlm-tooltip span, 
+.hotspot-library.pnlm-tooltip span, 
+.hotspot-admin.pnlm-tooltip span, 
+.hotspot-clinic.pnlm-tooltip span,
+.hotspot-reception.pnlm-tooltip span,
+.hotspot-studentservices.pnlm-tooltip span,
+.hotspot-bursary.pnlm-tooltip span,
+.hotspot-canteen.pnlm-tooltip span,
+.hotspot-atrium.pnlm-tooltip span,
+.hotspot-gym.pnlm-tooltip span,
+.hotspot-accommodations.pnlm-tooltip span,
+.hotspot-bilamart.pnlm-tooltip span,
+.hotspot-visacenter.pnlm-tooltip span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: var(--font-size-md);
+  border-radius: var(--border-radius-lg) !important;
+  white-space: nowrap !important;
+  width: auto !important;
+  max-width: none !important;
+  border: 1.7px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+
+/* Reception Hotspot */
+.hotspot-reception {
+  background-color: var(--hotspot-reception-base) !important;
+  border: 2px solid var(--hotspot-reception-primary) !important;
+}
+
+.hotspot-reception:before {
+  content: "\F425"; /* bi-person-workspace */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-reception.pnlm-tooltip span {
+  background: var(--hotspot-reception-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-reception.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-reception-primary) !important;
+}
+
+/* Student Services Hotspot */
+.hotspot-studentservices {
+  background-color: var(--hotspot-studentservices-base) !important;
+  border: 2px solid var(--hotspot-studentservices-primary) !important;
+}
+
+.hotspot-studentservices:before {
+  content: "\F389"; /* bi-people */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-studentservices.pnlm-tooltip span {
+  background: var(--hotspot-studentservices-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-studentservices.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-studentservices-primary) !important;
+}
+
+/* Bursary Hotspot */
+.hotspot-bursary {
+  background-color: var(--hotspot-bursary-base) !important;
+  border: 2px solid var(--hotspot-bursary-primary) !important;
+}
+
+.hotspot-bursary:before {
+  content: "\F62E"; /* bi-cash-coin */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-bursary.pnlm-tooltip span {
+  background: var(--hotspot-bursary-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-bursary.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-bursary-primary) !important;
+}
+
+/* Canteen Hotspot */
+.hotspot-canteen {
+  background-color: var(--hotspot-canteen-base) !important;
+  border: 2px solid var(--hotspot-canteen-primary) !important;
+}
+
+.hotspot-canteen:before {
+  content: "\F312"; /* bi-cup-hot */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-canteen.pnlm-tooltip span {
+  background: var(--hotspot-canteen-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-canteen.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-canteen-primary) !important;
+}
+
+/* Atrium Hotspot */
+.hotspot-atrium {
+  background-color: var(--hotspot-atrium-base) !important;
+  border: 2px solid var(--hotspot-atrium-primary) !important;
+}
+
+.hotspot-atrium:before {
+  content: "\F3EA"; /* bi-building */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-atrium.pnlm-tooltip span {
+  background: var(--hotspot-atrium-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-atrium.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-atrium-primary) !important;
+}
+
+/* Gym Hotspot */
+.hotspot-gym {
+  background-color: var(--hotspot-gym-base) !important;
+  border: 2px solid var(--hotspot-gym-primary) !important;
+}
+
+.hotspot-gym:before {
+  content: "\F8F6"; /* bi-person-walking */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-gym.pnlm-tooltip span {
+  background: var(--hotspot-gym-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-gym.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-gym-primary) !important;
+}
+
+/* Accommodations Hotspot */
+.hotspot-accommodations {
+  background-color: var(--hotspot-accommodations-base) !important;
+  border: 2px solid var(--hotspot-accommodations-primary) !important;
+}
+
+.hotspot-accommodations:before {
+  content: "\F1DD"; /* bi-house */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-accommodations.pnlm-tooltip span {
+  background: var(--hotspot-accommodations-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-accommodations.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-accommodations-primary) !important;
+}
+
+/* Bila Bila Mart Hotspot */
+.hotspot-bilamart {
+  background-color: var(--hotspot-bilamart-base) !important;
+  border: 2px solid var(--hotspot-bilamart-primary) !important;
+}
+
+.hotspot-bilamart:before {
+  content: "\F542"; /* bi-shop */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-bilamart.pnlm-tooltip span {
+  background: var(--hotspot-bilamart-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-bilamart.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-bilamart-primary) !important;
+}
+
+/* Visa Center Hotspot */
+.hotspot-visacenter {
+  background-color: var(--hotspot-visacenter-base) !important;
+  border: 2px solid var(--hotspot-visacenter-primary) !important;
+}
+
+.hotspot-visacenter:before {
+  content: "\F8F5"; /* bi-file-text */
+  font-family: var(--font-family-icons) !important;
+  font-size: var(--font-size-md);
+}
+
+.hotspot-visacenter.pnlm-tooltip span {
+  background: var(--hotspot-visacenter-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-visacenter.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-visacenter-primary) !important;
+}
+
+/* Individual Tooltip Themes */
+.hotspot-elevator.pnlm-tooltip span {
+  background: var(--hotspot-elevator-dark) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.hotspot-elevator.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-elevator-primary) !important;
+}
+
+.hotspot-building.pnlm-tooltip span {
+  background: var(--hotspot-building-dark) !important;
+
+  color: var(--color-white) !important;
+}
+
+.hotspot-building.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-building-primary) !important;
+}
+
+.hotspot-navigation.pnlm-tooltip span {
+  background: var(--hotspot-navigation-dark) !important;
+  color: var(--color-white) !important;
+  font-size: var(--font-size-md) !important;
+  padding: 10px 20px !important;
+}
+
+.hotspot-navigation.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-navigation-base) !important;
+}
+
+.hotspot-library.pnlm-tooltip span {
+  background: var(--hotspot-library-dark) !important;
+  color: var(--color-white) !important;
+}
+
+.hotspot-library.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-library-primary) !important;
+}
+
+.hotspot-stairs.pnlm-tooltip span {
+  background: var(--hotspot-stairs-dark) !important;
+
+  color: var(--color-white) !important;
+  font-size: var(--font-size-sm);
+}
+
+.hotspot-stairs.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-stairs-primary) !important;
+}
+
+.hotspot-info.pnlm-tooltip span {
+  background: var(--hotspot-info-dark) !important;
+
+  color: var(--color-white) !important;
+}
+
+.hotspot-info.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-info-primary) !important;
+}
+
+.hotspot-clinic.pnlm-tooltip span {
+  background: var(--hotspot-clinic-dark) !important;
+  color: var(--color-white) !important;
+  width: 100% !important;
+}
+
+.hotspot-clinic.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-clinic-primary) !important;
+}
+
+.hotspot-admin.pnlm-tooltip span {
+  background: var(--hotspot-admin-dark) !important;
+
+  color: var(--color-white) !important;
+}
+
+.hotspot-admin.pnlm-tooltip span:after {
+  border-top-color: var(--hotspot-admin-primary) !important;
+}
+
+/* Alternative Tooltip Styles */
+.tooltip-minimal .pnlm-tooltip span {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: var(--color-white) !important;
+  border-radius: var(--border-radius-sm) !important;
+  padding: 6px 12px !important;
+  font-size: var(--font-size-sm) !important;
+  border: none !important;
+  box-shadow: var(--shadow-tooltip) !important;
+}
+
+.tooltip-minimal .pnlm-tooltip span:after {
+  border-top-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.tooltip-glass .pnlm-tooltip span {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: var(--color-white) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ===== ANIMATIONS AND INTERACTIONS ===== */
+.pnlm-hotspot-base:hover .pnlm-tooltip span {
+  transform: scale(1.05) !important;
+  box-shadow: var(--shadow-tooltip-hover) !important;
+}
+
+@keyframes tooltipFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 850px) {
+  .navigation-panel {
+    width: calc(100% - 60px);
+    margin: 0 16px;
+    left: 48%;
+    bottom: 7%;
+  }
+}
+
+@media (max-width: 600px) {
+  .navigation-panel {
+    height: auto;
+    min-height: var(--nav-panel-height);
+    flex-direction: row;
+    padding: 16px 20px;
+    gap: 12px;
+  }
+  
+  .navigation-panel h3 {
+    font-size: var(--font-size-lg);
+    min-width: auto;
+  }
+  
+  #navigationContent {
+    margin: 0;
+    text-align: center;
+  }
+  
+  .full-rounded {
+    align-self: stretch;
+  }
+}
+
+/* compass */
+.pnlm-compass {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.71); 
+  border: 2px solid #1F2933; 
+  box-shadow: 0 4px 8px rgba(39, 50, 63, 0.3);
+  display: inline-block;
+  cursor: default;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  background-image: url('tech_images/compass.svg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pnlm-compass:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(109, 73, 217, 0.4); /* majorelle-blue glow */
+}
+
+.pnlm-compass::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 28px;
+  width: 4px;
+  height: 40px;
+  border-radius: 2px;
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+
+@media (max-width: 480px) {
+  .navigation-panel {
+    padding: 14px 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    max-height: 100px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .back-menu-container {
+    display: flex;
+    justify-content: flex-start !important;
+    margin-bottom: 10px;
+    max-width: 60px !important;
+  }
+
+  .back-menu-container .full-rounded {
+        background-color: #f0f0f0;
+        border: none;
+        border-radius: 10px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        max-width: 50px;
+        max-height: 50px;
+        display: flex
+;
+        justify-content: center;
+        align-items: center;
+  }
+
+  .back-menu-container .back-button {
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .title-container {
+    text-align: center;
+    margin-bottom: 5px;
+    max-width: 100px !important;
+  }
+
+  .title-container h3 {
+    font-size: 16px;
+  }
+
+  .title-subtitle p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    padding: 0 10px;
+  }
+
+  #navigationContent {
+            margin-top: 12px;
+        font-size: 14px;
+        line-height: 1.4;
+        max-width: 150px !important;
+  }
+
+  .location-info,
+  .explore-mode,
+  .destination-info {
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 12px;
+  }
+  .back-button {
+    color: var(--color-white);
+    font-size: 0;
+  }
+
+  .back-button::before {
+    content: '←';
+    font-size: 18px;
+  }
+
+  
+
+ 
+}
+
+@media (max-width: 320px) {
+  .explore-mode {
+    font-size: 0px;
+    
+  }
+
+}

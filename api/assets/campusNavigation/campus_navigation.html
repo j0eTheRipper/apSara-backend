@@ -1,0 +1,1614 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Virtual Tour</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <link rel="stylesheet" href ="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="navigation-panel" id="navigationPanel">
+        <div class="back-menu-container">
+            <button class="full-rounded">
+                <a href="navigation_menu_page.html" class="back-button">
+                    ← Back to Menu
+                </a>
+            </button>
+        </div>
+        <div class="title-container" id="titleContainer">
+            <h3 id="titleText">APU Campus</h3>
+            <div class="title-subtitle" id="titleSubtitle">
+                <p>Explore the campus and find your way around!</p>                
+            </div>
+        </div>
+        <div id="navigationContent"></div>
+       
+        
+    </div>
+
+    <div id="panorama"></div>
+</body>
+</html>
+<script>
+    const locationMap = {
+        // Block Levels
+        "locationALevel3": "Block A Level 3",
+        'locationBetweenBlockABlockBLevel3': "Transit Area",
+        'locationBLevel3': "Block B Level 3",
+        'locationDLevel3': "Block D Level 3",
+        'locationELevel3': "Block E Level 3",
+        'locationGymBilaMart3': "Level 3 Recreational Area (Gym & Accommodations)",
+        "locationALevel4": "Block A Level 4",
+        "locationBLevel4": "Block B Level 4", 
+        "locationDLevel4": "Block D Level 4",
+        "locationAdminClinic4": "Admin Office and Clinic",
+        "locationELevel4": "Block E Level 4",
+        "locationLibrary4": "Library",
+        "locationBetweenLibraryBlockE4": "Transit Area",
+        
+        // Specific Locations
+        "locationReception3": "Reception",
+        "locationStudentServices3": "Student Services",
+        "locationBursary3": "Bursary",
+        "locationCanteen3": "Canteen",
+        "locationAtrium3": "Atrium",
+        "locationGym3": "Gym",
+        "locationAccomadations3": "Accommodations",
+        "locationBilaMart3": "Bila Bila Mart",
+        "locationAdmin4": "Admin",
+        "locationClinic4": "Clinic",
+        "locationVisaCenter3": "Visa Center"
+    };
+
+        const sceneTransitions = {
+
+            //this varaibel is responsible for hotspots target yaw and pitch of the following scenes 
+
+            //add scene transtition to yourselft
+            // ======== READY =========//
+            locationALevel4: {
+                locationBLevel4: { targetYaw: 334, targetPitch: -2.1 },
+                locationLibrary4: { targetYaw: 108, targetPitch: -2.1 },
+                locationDLevel4: { targetYaw: 108, targetPitch: -2.1 },
+                locationBetweenLibraryBlockE4: { targetYaw: 108, targetPitch: -2.1 },
+                locationAdminClinic4: { targetYaw: 108, targetPitch: -2.1 },
+                locationELevel4: { targetYaw: 108, targetPitch: -2.1 },
+                locationAdmin4: { targetYaw: 108, targetPitch: -2.1 },
+
+            },
+
+            locationBLevel4: {
+                locationALevel4: { targetYaw: 70, targetPitch: -2.1 },
+                locationLibrary4: { targetYaw: 228, targetPitch: -2 },
+                locationDLevel4: { targetYaw: 98, targetPitch: -2 },
+                locationBetweenLibraryBlockE4: { targetYaw: 228, targetPitch: -2 },
+                locationAdminClinic4: { targetYaw: 113, targetPitch: -2.1 },
+                locationELevel4: { targetYaw: 228, targetPitch: -2 }
+            },
+            locationDLevel4: {
+                locationALevel4: { targetYaw: 225, targetPitch: -2.1 },
+                locationLibrary4: { targetYaw: 80, targetPitch: -2 },
+                locationBLevel4: { targetYaw: 334, targetPitch: -2.1 },
+                locationBetweenLibraryBlockE4: { targetYaw: 228, targetPitch: -2 },
+                locationAdminClinic4: { targetYaw: 160, targetPitch: 0 },
+                locationELevel4: { targetYaw: 305, targetPitch: -2 }
+            },
+            locationAdminClinic4: {
+                locationALevel4: { targetYaw: 359, targetPitch: -2.1 },
+                locationLibrary4: { targetYaw: 228, targetPitch: -1 },
+                locationBLevel4: { targetYaw: 359, targetPitch: -6 },
+                locationBetweenLibraryBlockE4: { targetYaw: 228, targetPitch: -1 },
+                locationDLevel4: { targetYaw: 60, targetPitch: -1 },
+                locationELevel4: { targetYaw: 228, targetPitch: -2.1 }
+            },
+            locationELevel4: {
+                locationALevel4: { targetYaw: 145, targetPitch: -2.1 },
+                locationLibrary4: { targetYaw: 80, targetPitch: -1 },
+                locationBLevel4: { targetYaw: 145, targetPitch: -6 },
+                locationBetweenLibraryBlockE4: { targetYaw: 320, targetPitch: -1 },
+                locationAdminClinic4: { targetYaw: 160, targetPitch: -1 },
+                locationDLevel4: { targetYaw: 168, targetPitch: -2.1 }
+            },
+            locationLibrary4: {
+                locationALevel4: { targetYaw: 145, targetPitch: -2.1 },
+                locationBLevel4: { targetYaw: 145, targetPitch: -6 },
+                locationDLevel4: { targetYaw: 168, targetPitch: -1 },
+                locationBetweenLibraryBlockE4: { targetYaw: 300, targetPitch: -1 },
+                locationAdminClinic4: { targetYaw: 168, targetPitch: -2.1 },
+                locationELevel4: { targetYaw: 305, targetPitch: -1 }
+            },
+            locationBetweenLibraryBlockE4: {
+                locationALevel4: { targetYaw: 225, targetPitch: -2.1 },
+                locationBLevel4: { targetYaw: 334, targetPitch: -6 },
+                locationDLevel4: { targetYaw: 60, targetPitch: -1 },
+                locationAdminClinic4: { targetYaw: 113, targetPitch: -1 },
+                locationELevel4: { targetYaw: 210, targetPitch: -2.1 },
+                locationLibrary4: { targetYaw: 228, targetPitch: -1 }
+            },
+
+            // level 3 
+            // ????????????? NOT READY ??????????????? //
+            locationALevel3: {
+                locationBLevel3: { targetYaw: 157, targetPitch: -2.1 },
+                locationBetweenBlockABlockBLevel3: { targetYaw: 157, targetPitch: -2.1 },
+                locationDLevel3: { targetYaw: 157, targetPitch: -2.1 },
+                locationGymBilaMart3: { targetYaw: 157, targetPitch: -2.1 },
+                locationELevel3: { targetYaw: 157, targetPitch: -2.1 }
+            },
+            locationBLevel3: {
+                locationALevel3: { targetYaw: 270, targetPitch: -0.5 },
+                locationBetweenBlockABlockBLevel3: { targetYaw: 270, targetPitch: -2.1 },
+                locationDLevel3: { targetYaw: 128.7, targetPitch: 8 },
+                locationGymBilaMart3: { targetYaw: 250, targetPitch: -2.1 },
+                locationELevel3: { targetYaw: 250, targetPitch: -2.1 }
+            },
+            locationDLevel3: {
+                locationALevel3: { targetYaw: 297, targetPitch: -2.1 },
+                locationBLevel3: { targetYaw: 314, targetPitch: -2.1 },
+                locationBetweenBlockABlockBLevel3: { targetYaw: 297, targetPitch: -2.1 },
+                locationGymBilaMart3: { targetYaw: 110, targetPitch: -1.1 },
+                locationELevel3: { targetYaw: 50, targetPitch: 10 }
+            },
+            locationBetweenBlockABlockBLevel3: {
+                locationALevel3: { targetYaw: 340, targetPitch: -2.1 },
+                locationBLevel3: { targetYaw: 314, targetPitch: 0.8 },
+                locationDLevel3: { targetYaw: 122, targetPitch: 0 },
+                locationGymBilaMart3: { targetYaw: 122, targetPitch: 0 },
+                locationELevel3: { targetYaw: 122, targetPitch: 0 }
+            },
+            locationELevel3: {
+                locationALevel3: { targetYaw: 76, targetPitch: -1.3 },
+                locationBLevel3: { targetYaw: 76, targetPitch: -1.3 },
+                locationDLevel3: { targetYaw: 128.7, targetPitch: 8 },
+                locationBetweenBlockABlockBLevel3: { targetYaw: 76, targetPitch: -1.3 },
+                locationGymBilaMart3: { targetYaw: 200, targetPitch: -2.1 },
+            },
+            locationGymBilaMart3: {
+                locationALevel3: { targetYaw: 290, targetPitch: -0.3 },
+                locationBLevel3: { targetYaw: 290, targetPitch: -0.3 },
+                locationDLevel3: { targetYaw: 290, targetPitch: -0.3  },
+                locationBetweenBlockABlockBLevel3: { targetYaw: 290, targetPitch: -0.3  },
+                locationDLevel3: { targetYaw: 290, targetPitch: -0.3 },
+                locationGymBilaMart3: { targetYaw: 290, targetPitch: -0.3  },
+            },
+        };
+
+        const StairsTransitions = {
+
+            // ================ READY =============//
+            // This variable is used when the is route in multiple levels and you have to assign 
+            // yaw and pitch to turn to stairs 
+            locationALevel4: {targetYaw: 197, targetPitch: -2.1},
+            locationBLevel4: {targetYaw: 29, targetPitch: -2.1},
+            locationDLevel4: {targetYaw: 60, targetPitch: -2.1},
+            locationAdminClinic4: {targetYaw: 180, targetPitch: -2.1},
+            locationELevel4: {targetYaw: 247, targetPitch: -2.1},
+            locationBetweenLibraryBlockE4: {targetYaw: 247, targetPitch: -2.1},
+            //level 3
+            locationALevel3: {targetYaw: 140, targetPitch: -3},
+            locationBLevel3: {targetYaw: 326, targetPitch: -2.1},
+            locationDLevel3: {targetYaw: 140, targetPitch: -2.1},
+            locationELevel3: {targetYaw: 40, targetPitch: -2.1},
+
+        }
+
+        const StairsInitialTransitions = {
+
+            // ================ READY =============//
+            // This variable is used when the is route in multiple levels and you have to assign 
+            // yaw and pitch to turn to stairs 
+            locationALevel4: {targetYaw: 197, targetPitch: -2.1},
+            locationBLevel4: {targetYaw: 29, targetPitch: -2.1},
+            locationDLevel4: {targetYaw: 60, targetPitch: -2.1},
+            locationAdminClinic4: {targetYaw: 180, targetPitch: -2.1},
+            locationELevel4: {targetYaw: 247, targetPitch: -2.1},
+            //level 3
+            locationALevel3: {targetYaw: 140, targetPitch: -3},
+            locationBLevel3: {targetYaw: 326, targetPitch: -2.1},
+            locationDLevel3: {targetYaw: 140, targetPitch: -2.1},
+            locationELevel3: {targetYaw: 40, targetPitch: -2.1},
+
+        }
+        const initialPitchYaw = {
+            // this variable is repsonsible to initial pitch and yaw of the scene in the route beginning
+            
+            // ======== READY =========//
+            locationALevel4: {
+                locationALevel4: {Yaw: 70, Pitch: -2.1},
+                locationBLevel4: {Yaw: 250, Pitch: -2.1},
+                locationLibrary4: {Yaw: 250, Pitch: -2.1},
+                locationDLevel4: {Yaw: 250, Pitch: -2.1},
+                locationBetweenLibraryBlockE4: {Yaw: 250, Pitch: -2.1},
+                locationAdminClinic4: {Yaw: 250, Pitch: -2.1},
+                locationELevel4: {Yaw: 250, Pitch: -2.1}
+            },
+            locationBLevel4: {
+                locationALevel4: {Yaw: 225, Pitch: -2.1},
+                locationLibrary4: {Yaw: 108, Pitch: -2},
+                locationDLevel4: {Yaw: 108, Pitch: -2},
+                locationBetweenLibraryBlockE4: {Yaw: 108, Pitch: -2},
+                locationAdminClinic4: {Yaw: 108, Pitch: -2.1},
+                locationELevel4: {Yaw: 108, Pitch: -2},
+                locationBLevel4: {Yaw: 344, Pitch: -2.1}
+            }, 
+            locationDLevel4: {
+                locationALevel4: {Yaw: 359, Pitch: -2.1},
+                locationLibrary4: {Yaw: 228, Pitch: -2},
+                locationBLevel4: {Yaw: 359, Pitch: -2.1},
+                locationBetweenLibraryBlockE4: {Yaw: 228, Pitch: -2},
+                locationAdminClinic4: {Yaw: 113, Pitch: -2.1},
+                locationELevel4: {Yaw: 228, Pitch: -2.1},
+                locationDLevel4: {Yaw: 98, Pitch: 0},
+
+            },
+            locationAdminClinic4: {
+                locationALevel4: {Yaw: 190, Pitch: -2.1},
+                locationLibrary4: {Yaw: 190, Pitch: -2},
+                locationBLevel4: {Yaw: 190, Pitch: -2.1},
+                locationBetweenLibraryBlockE4: {Yaw: 190, Pitch: -2},
+                locationDLevel4: {Yaw: 190, Pitch: -2.1},
+                locationELevel4: {Yaw: 135, Pitch: -2.1},
+                locationAdminClinic4: {Yaw: 180, Pitch: -2.1},
+            },
+            locationELevel4: {
+                locationALevel4: {Yaw: 82, Pitch: -2.1},
+                locationLibrary4: {Yaw: 82, Pitch: -2},
+                locationBLevel4: {Yaw: 82, Pitch: -2.1},
+                locationBetweenLibraryBlockE4: {Yaw: 82, Pitch: -2},
+                locationAdminClinic4: {Yaw: 187, Pitch: -2.1},
+                locationDLevel4: {Yaw: 82, Pitch: -2.1},
+                locationELevel4: {Yaw: 210, Pitch: 0}
+            },
+            locationLibrary4: {
+                locationALevel4: {Yaw: 320, Pitch: -2.1},
+                locationBLevel4: {Yaw: 320, Pitch: -2.1},
+                locationDLevel4: {Yaw: 320, Pitch: -2.1},
+                locationBetweenLibraryBlockE4: {Yaw: 320, Pitch: -2.1},
+                locationAdminClinic4: {Yaw: 320, Pitch: -2.1},
+                locationELevel4: {Yaw: 320, Pitch: -2.1},
+                locationLibrary4: {Yaw: 228, Pitch: -2.1}
+            },
+            locationBetweenLibraryBlockE4: {
+                locationALevel4: {Yaw: 145, Pitch: -2.1},
+                locationBLevel4: {Yaw: 145, Pitch: -2.1},
+                locationDLevel4: {Yaw: 168, Pitch: -2.1},
+                locationAdminClinic4: {Yaw: 168, Pitch: -2.1},
+                locationELevel4: {Yaw: 305, Pitch: -2.1},
+                locationLibrary4: {Yaw: 80, Pitch: -2.1},
+                locationBetweenLibraryBlockE4: {Yaw: 5, Pitch: -2.1}
+            },
+
+
+
+            // ========= NOT READY ================ //
+            locationALevel3: {
+                locationALevel3: {Yaw: 340, Pitch: -0.5},
+                locationBLevel3: {Yaw: 180, Pitch: -2.1},
+                locationBetweenBlockABlockBLevel3: {Yaw: 180, Pitch: -2.1},
+                locationDLevel3: {Yaw: 180, Pitch: -2.1},
+                locationELevel3: {Yaw: 180, Pitch: -2.1},
+                locationGymBilaMart3: {Yaw: 180, Pitch: -2.1},
+            },
+            locationBLevel3: {
+                locationALevel3: {Yaw: 297, Pitch: -2.1},
+                locationBetweenBlockABlockBLevel3: {Yaw: 297, Pitch: -2.1},
+                locationDLevel3: {Yaw: 122, Pitch: 0},
+                locationELevel3: {Yaw: 122, Pitch: 0},
+                locationGymBilaMart3: {Yaw: 122, Pitch: 0},
+                locationBLevel3: {Yaw: 314, Pitch: 0.8},
+            },
+            locationBetweenBlockABlockBLevel3: {
+                locationALevel3: {Yaw: 270, Pitch: -2.1},
+                locationBLevel3: {Yaw: 157, Pitch: 0.5},
+                locationDLevel3: {Yaw: 157, Pitch: 0.5},
+                locationELevel3: {Yaw: 157, Pitch: 0.5},
+                locationGymBilaMart3: {Yaw: 157, Pitch: 0.5},
+            },
+            locationDLevel3: {
+                locationALevel3: {Yaw: 76, Pitch: -1.3},
+                locationBLevel3: {Yaw: 76, Pitch: -1.3},
+                locationBetweenBlockABlockBLevel3: {Yaw: 76, Pitch: -1.3},
+                locationELevel3: {Yaw: 250, Pitch: 0},
+                locationGymBilaMart3: {Yaw: 250, Pitch: 0},
+                locationDLevel3: {Yaw: 128.7, Pitch: 8},
+            },
+            locationELevel3: {
+                locationALevel3: {Yaw: 290, Pitch: -0.3},
+                locationBLevel3: {Yaw: 290, Pitch: -0.3},
+                locationBetweenBlockABlockBLevel3: {Yaw: 290, Pitch: -0.3},
+                locationDLevel3: {Yaw: 290, Pitch: -0.3},
+                locationGymBilaMart3: {Yaw: 110, Pitch: -1.1},
+                locationELevel3: {Yaw: 50, Pitch: 10},
+            },
+            locationGymBilaMart3: {
+                locationALevel3: {Yaw: 117, Pitch: -2.1},
+                locationBLevel3: {Yaw: 117, Pitch: -2.1},
+                locationBetweenBlockABlockBLevel3: {Yaw: 117, Pitch: -2.1},
+                locationDLevel3: {Yaw: 117, Pitch: -2.1},
+                locationELevel3: {Yaw: 117, Pitch: -2.1},
+                locationGymBilaMart3: {Yaw: 200, Pitch: -2.1},
+            },
+        };
+
+        const finalSceneTransitions = {
+            locationALevel4: {
+                locationALevel4: { targetYaw: 70, targetPitch: -2.1 },
+            },
+            locationBLevel4: {
+                locationBLevel4: { targetYaw: 344, targetPitch: -2.1 },
+            },
+            locationLibrary4: {
+                locationLibrary4: { targetYaw: 108, targetPitch: -2.1 },
+            },
+            locationDLevel4: {
+                locationDLevel4: { targetYaw: 108, targetPitch: -2.1 },
+            },
+            locationELevel4: {
+                locationELevel4: { targetYaw: 210, targetPitch: -2.1 },
+            },
+            // Admin Office and Clinic, Visa Center
+            locationAdminClinic4: {
+                locationAdminClinic4: { targetYaw: 180, targetPitch: -2.1 },
+                locationAdmin4: { targetYaw: 236, targetPitch: -0.5 },
+                locationClinic4: { targetYaw: 90, targetPitch: 0 },
+                locationVisaCenter3: { targetYaw: 311, targetPitch: -3.2 },
+            },
+            
+            // Gym and Bila Bila Mart
+            locationGymBilaMart3: {
+                locationGymBilaMart3: { targetYaw: 200, targetPitch: -0.3 },
+                locationGym3: { targetYaw: 18, targetPitch: -2.1 },
+                locationBilaMart3: { targetYaw: 200, targetPitch: -2.1 },
+                locationAccomadations3: { targetYaw: 343, targetPitch: 2 },
+            },
+            
+            // Student Services, block B
+            locationBLevel3: {
+                locationBLevel3: { targetYaw: 314, targetPitch: -0.5 },
+                locationStudentServices3: { targetYaw: 279, targetPitch: -2.1 },
+                locationBankomat3: { targetYaw: 78, targetPitch: 0 },
+                locationBLevel3: { targetYaw: 314, targetPitch: -2.1 },
+            },
+            locationALevel3: {
+                locationALevel3: { targetYaw: 340, targetPitch: -2.1 },
+                locationReception3: { targetYaw: 217, targetPitch: -1 },
+                locationALevel3: {targetYaw: 340, targetPitch: -0.5 },
+            },
+            
+            // Block D, Bursary, Canteen, Atrium
+            locationDLevel3: {
+                locationDLevel3: { targetYaw: 128.7, targetPitch: 8 },
+                locationBursary3: { targetYaw: 30, targetPitch: -2.1 },
+                locationCanteen3: { targetYaw: 205, targetPitch: -2.1 },
+                locationAtrium3: { targetYaw: 278, targetPitch: -2.1 },
+            },
+
+            locationELevel3: {
+                locationELevel3: { targetYaw: 50, targetPitch: 10 },
+            },
+
+        };
+        // !!!!!!!! RECHECK !!!!!!!!!!!//
+        const scenesLevel4 =  {
+            "locationALevel4": {
+                    "title": "Place in front of Block A",
+                    "pitch": 0,
+                    "yaw": 100,
+                    "hfov": 110,
+                    
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L4BA.JPEG",
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,
+                            "yaw": 250,
+                            "type": "scene",
+                            "text": "Go to Block B",
+                            "sceneId": "locationBLevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 70,
+                            "type": "info",
+                            "text": "Block A",
+                            "cssClass": "hotspot-building"
+                        },
+                        {
+                            "pitch": -1,
+                            "yaw": 293,
+                            "type": "info",
+                            "text": "Library",
+                            "cssClass": "hotspot-library"
+                        },
+                        {
+                            "pitch": -6,
+                            "yaw": 197,
+                            "type": "scene",
+                            "text": "Stairs",
+                            "cssClass": "hotspot-stairs",
+                            "sceneId": "locationALevel3"
+                        },
+                        {
+                            "pitch": -5,
+                            "yaw": 30,
+                            "type": "info",
+                            "text": "Elevator",
+                            "cssClass": "hotspot-elevator hotspot-pulse",
+                            "sceneId": "locationALevel3"
+                        }
+                    ]
+                },
+
+                "locationBLevel4": {
+                    "title": "Block B. Entrance",
+                    "hfov": 110,
+                    
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L4BBB.JPEG",
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,
+                            "yaw": 225,
+                            "type": "scene",
+                            "text": "Go to Block A",
+                            "sceneId": "locationALevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 108,
+                            "type": "scene",
+                            "text": "Go to Block D and Library",
+                            "sceneId": "locationDLevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 344,
+                            "type": "info",
+                            "text": "Block B",
+                            "cssClass": "hotspot-building"
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 170,
+                            "type": "info",
+                            "text": "Library",
+                            "cssClass": "hotspot-library"
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 29,
+                            "type": "scene",
+                            "text": "Stairs and elevator",
+                            "cssClass": "hotspot-stairs",
+                            "sceneId": "locationBLevel3"
+                        }
+                    ]
+                },
+
+                "locationDLevel4": {
+                    "title": "Block D. Entrance",
+                    "hfov": 110,
+                    
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L4BD.JPEG",
+                    "hotSpots": [
+                        {
+                            "pitch": -2,
+                            "yaw": 228,
+                            "type": "scene",
+                            "text": "Go to Block E and Library",
+                            "sceneId": "locationBetweenLibraryBlockE4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 113,
+                            "type": "scene",
+                            "text": "Go to Admin Office and Clinic",
+                            "sceneId": "locationAdminClinic4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2,
+                            "yaw": 359,
+                            "type": "scene",
+                            "text": "Go to Block B",
+                            "sceneId": "locationBLevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2,
+                            "yaw": 60,
+                            "type": "scene",
+                            "text": "Stairs",
+                            "cssClass": "hotspot-stairs",
+                            "sceneId": "locationDLevel3"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 98,
+                            "type": "info",
+                            "text": "Block D",
+                            "cssClass": "hotspot-building"
+                        },
+                    ]
+                },
+
+                "locationBetweenLibraryBlockE4": {
+                    "title": "Place between Block E and Library",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L4BED.JPEG",
+                    "hotSpots": [
+                        {
+                            "pitch": -2,
+                            "yaw": 168,
+                            "type": "scene",
+                            "text": "Go to Block D",
+                            "sceneId": "locationDLevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2,
+                            "yaw": 80,
+                            "type": "scene",
+                            "text": "Go to library",
+                            "sceneId": "locationLibrary4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2,
+                            "yaw": 305,
+                            "type": "scene",
+                            "text": "Go to Block E and Tech labs",
+                            "sceneId": "locationELevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2,
+                            "yaw": 145,
+                            "type": "scene",
+                            "text": "Go to Block B",
+                            "sceneId": "locationBLevel4",
+                            "cssClass": "hotspot-navigation"
+                        }
+                    ]
+                },
+
+                "locationLibrary4": {
+                    "title": "Library Entrance",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L4BB2.JPEG",
+                    "hotSpots": [
+                        {
+                            "pitch": -1,
+                            "yaw": 320,
+                            "type": "scene",
+                            "text": "Go to Block D or Block E",
+                            "sceneId": "locationBetweenLibraryBlockE4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -3,
+                            "yaw": 228,
+                            "type": "info",
+                            "text": "Welcome to the library!",
+                            "cssClass": "hotspot-library"
+                        }
+                    ]
+                },
+
+                "locationELevel4": {
+                    "title": "Block E. Entrance",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L4BE2.JPEG",
+                    "hotSpots": [
+                        {
+                            "pitch": -2,
+                            "yaw": 20,
+                            "type": "info",
+                            "text": "Tech labs (Block S)",
+                            "cssClass": "hotspot-info"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 247,
+                            "type": "scene",
+                            "text": "Elevator and stairs",
+                            "cssClass": "hotspot-stairs",
+                            "sceneId": "locationELevel3"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 210,
+                            "type": "info",
+                            "text": "Block E",
+                            "cssClass": "hotspot-building"
+                        },
+                        {
+                            "pitch": -1.5,
+                            "yaw": 187,
+                            "type": "scene",
+                            "text": "Go to Clinic and Admin Office",
+                            "sceneId": "locationAdminClinic4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2,
+                            "yaw": 82,
+                            "type": "scene",
+                            "text": "Go to Library and Block D",
+                            "sceneId": "locationBetweenLibraryBlockE4",
+                            "cssClass": "hotspot-navigation"
+                        }
+                    ]
+                },
+
+                "locationAdminClinic4": {
+                    "title": "Admin Office and Clinic",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L4AC.JPEG",
+                    "hotSpots": [
+                        {
+                            "pitch": -0.5,
+                            "yaw": 236,
+                            "type": "info",
+                            "text": "Admin Office",
+                            "cssClass": "hotspot-admin"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 90,
+                            "type": "info",
+                            "text": "Clinic",
+                            "cssClass": "hotspot-clinic"
+                        },
+                        {
+                            "pitch": -3.2,
+                            "yaw": 311,
+                            "type": "info",
+                            "text": "Visa Center",
+                            "cssClass": "hotspot-visacenter"
+                        },
+                        {
+                            "pitch": -0.5,
+                            "yaw": 190,
+                            "type": "scene",
+                            "text": "Block D",
+                            "sceneId": "locationDLevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 135,
+                            "type": "scene",
+                            "text": "Block E",
+                            "sceneId": "locationELevel4",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -8,
+                            "yaw": 335,
+                            "type": "info",
+                            "text": "Stairs to canteen",
+                            "cssClass": "hotspot-stairs",
+                            // 'sceneId': 'location',
+                        }
+                    ]
+                }
+        }
+        const scenesLevel3 = {
+            "locationALevel3": {
+                    "title": "Level 3 - Block A Area",
+                    "pitch": 0,
+                    "yaw": 100,
+                    "hfov": 110,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L3I1.JPEG", // Update with actual image path
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,
+                            "yaw": 180,
+                            "type": "scene",
+                            "text": "Go to Block B",
+                            "sceneId": "locationBetweenBlockABlockBLevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -0.5,
+                            "yaw": 340,
+                            "type": "info",
+                            "text": "Block A",
+                            "cssClass": "hotspot-building",
+                        },
+                        {
+                            "pitch": -1,
+                            "yaw": 217,
+                            "type": "info",
+                            "text": "Reception",
+                            "cssClass": "hotspot-reception",
+                        },
+                        {
+                            "pitch": -2,
+                            "yaw": 303,
+                            "type": "info",
+                            "text": "Elevator",
+                            "cssClass": "hotspot-elevator",
+                            "sceneId": "locationALevel4"
+                        },
+                        {
+                            "pitch": -3,
+                            "yaw": 140,
+                            "type": "scene",
+                            "text": "Stairs",
+                            "cssClass": "hotspot-stairs",
+                            "sceneId": "locationALevel4",
+
+                        },
+                    ]
+                },
+
+                "locationBetweenBlockABlockBLevel3": {
+                    "title": "Level 3 - Transit Area",
+                    "pitch": 0,
+                    "yaw": 180,
+                    "hfov": 110,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L3I2.JPEG", // Update with actual image path
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,
+                            "yaw": 270,
+                            "type": "scene",
+                            "text": "Go to Block A",
+                            "sceneId": "locationALevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 0.5,
+                            "yaw": 157,
+                            "type": "scene",
+                            "text": "Go to Block B and Atrium",
+                            "sceneId": "locationBLevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 0.5,
+                            "yaw": 142,
+                            "type": "info",
+                            "text": "Block B",
+                            "cssClass": "hotspot-building",
+                        },
+                        
+                    ]
+                },
+
+                "locationBLevel3": {
+                    "title": "Level 3 - Block B Area",
+                    "pitch": 0,
+                    "yaw": 0,
+                    "hfov": 110,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L3I3.JPEG", // Update with actual image path
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,
+                            "yaw": 297,
+                            "type": "scene",
+                            "text": "Go to Block A",
+                            "sceneId": "locationBetweenBlockABlockBLevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 122,
+                            "type": "scene",
+                            "text": "Go to Block D",
+                            "sceneId": "locationDLevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 78,
+                            "type": "info",
+                            "text": "Bankomat",
+                            "cssClass": "hotspot-info",
+                        },
+                        {
+
+                            "pitch": 0.8,
+                            "yaw": 279,
+                            "type": "info",
+                            "text": "Student Services",
+                            "cssClass": "hotspot-studentservices",
+                        },
+                        {
+                            "pitch": 0.8,
+                            "yaw": 314,
+                            "type": "info",
+                            "text": "Block B",
+                            "cssClass": "hotspot-building",
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 326,
+                            "type": "scene",
+                            "text": "Stairs",
+                            "cssClass": "hotspot-stairs",
+                            'sceneId': 'locationBLevel4',
+                        },
+                    ]
+                },
+
+                "locationDLevel3": {
+                    "title": "Level 3 - Block D Area",
+                    "pitch": 0,
+                    "yaw": 180,
+                    "hfov": 110,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L3I4.JPEG", // Update with actual image path
+                    "hotSpots": [
+                        {
+                            "pitch": -1.3,
+                            "yaw": 76,
+                            "type": "scene",
+                            "text": "Go to Block B",
+                            "sceneId": "locationBLevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 250,
+                            "type": "scene",
+                            "text": "Go to Block E",
+                            "sceneId": "locationELevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 8,
+                            "yaw": 128.7,
+                            "type": "info",
+                            "text": "Block D",
+                            "cssClass": "hotspot-building",
+                        },
+                        {
+                            "pitch": 8,
+                            "yaw": 140,
+                            "type": "scene",
+                            "text": "Stairs",
+                            "cssClass": "hotspot-stairs",
+                            'sceneId': 'locationDLevel4',
+                        },
+                        {
+                            "pitch": -1,
+                            "yaw": 30,
+                            "type": "info",
+                            "text": "Bursary",
+                            "cssClass": "hotspot-bursary",
+                        },
+                        {
+                            "pitch": 1,
+                            "yaw": 205,
+                            "type": "info",
+                            "text": "Canteen",
+                            "cssClass": "hotspot-canteen",
+                        },
+                        {
+                            "pitch": -0.5,
+                            "yaw": 278,
+                            "type": "info",
+                            "text": "Atrium",
+                            "cssClass": "hotspot-atrium hotspot-pulse",
+                        }
+                    ]
+                },
+
+                "locationELevel3": {
+                    "title": "Level 3 - Block E Area",
+                    "pitch": 0,
+                    "yaw": 270,
+                    "hfov": 110,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L3I5.JPEG", // Update with actual image path
+                    "hotSpots": [
+                        {
+                            "pitch": -0.3,
+                            "yaw": 290,
+                            "type": "scene",
+                            "text": "Go to Block D",
+                            "sceneId": "locationDLevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -1.1,
+                            "yaw": 110,
+                            "type": "scene",
+                            "text": "Go to Gym and Bila Bila Mart",
+                            "sceneId": "locationGymBilaMart3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": 0.5,
+                            "yaw": 10,
+                            "type": "info",
+                            "text": "Canteen",
+                            "cssClass": "hotspot-canteen",
+                        },
+                        {
+                            "pitch": 10,
+                            "yaw": 50,
+                            "type": "info",
+                            "text": "Block E",
+                            "cssClass": "hotspot-building",
+                        },
+                        {
+                            "pitch": -5,
+                            "yaw": 40,
+                            "type": "scene",
+                            "text": "Stairs",
+                            "cssClass": "hotspot-stairs",
+                            "sceneId": "locationELevel4",
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 268,
+                            "type": "info",
+                            "text": "Atrium",
+                            "cssClass": "hotspot-atrium",
+                        }
+                    ]
+                },
+
+                "locationGymBilaMart3": {
+                    "title": "Level 3 - Recreational Area",
+                    "pitch": 0,
+                    "yaw": 0,
+                    "hfov": 110,
+                    "type": "equirectangular",
+                    "panorama": "images_dev/L3I6.JPEG", // Update with actual image path
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,
+                            "yaw": 117,
+                            "type": "scene",
+                            "text": "Go to Block E",
+                            "sceneId": "locationELevel3",
+                            "cssClass": "hotspot-navigation"
+                        },
+                        {
+                            "pitch": -2.1,
+                            "yaw": 200,
+                            "type": "info",
+                            "text": "Bila Bila",
+                            "cssClass": "hotspot-bilamart",
+                        },
+                        {
+                            "pitch": -1,
+                            "yaw": 18,
+                            "type": "info",
+                            "text": "Gym",
+                            "cssClass": "hotspot-gym hotspot-pulse",
+                        },
+                        {
+                            "pitch": 2,
+                            "yaw": 343,
+                            "type": "info",
+                            "text": "University Accommodations",
+                            "cssClass": "hotspot-accommodations",
+                        }
+                    ]
+                },
+        }
+       // Parse URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                start: params.get('start'),
+                destination: params.get('destination'),
+                mode: params.get('mode')
+            };
+        }
+
+        // Update navigation panel based on current mode
+        function updateNavigationPanel(params, currentScene) {
+
+            const content = document.getElementById('navigationContent');
+            const currentLocationName = locationMap[currentScene] || 'Unknown Location';
+            const title = document.getElementById('titleContainer');
+            const subtitleText = document.getElementById('titleSubtitle');
+            
+            let html = `<div class="location-info"><strong>Current location:</strong> ${currentLocationName}</div>`;
+            let underTitlehtml = ``;
+            
+            if (params.mode === 'explore') {
+                console.log("Explore mode activated");
+                html += `<div class="explore-mode">Navigation Mode: Explore</div>`;
+                underTitlehtml += `Click on hotspots to navigate freely around campus.`;
+            } else if (params.destination) {
+                const destinationName = locationMap[params.destination] || 'Unknown';
+                html += `<div class="destination-info"><strong>Destination:</strong> ${destinationName}</div>`;
+                underTitlehtml += `Follow the hotspots to reach your destination.`;
+            }
+            
+            content.innerHTML = html;
+            subtitleText.innerHTML = underTitlehtml;
+        }
+
+        //Find the optimal route based on the provided start and destination
+        function findOptimalRoute(start, destination, options = {}) {
+            fromScene = start;
+            toScene = destination;
+            scenesData = all_scenes;
+            const {
+                algorithm = 'shortest', // 'shortest', 'all'
+                includeMetadata = true,
+                maxDepth = 10
+            } = options;
+            
+            try {
+                // Build the graph
+                const graph = buildSceneGraph(scenesData);
+                
+                let result = {
+                    success: false,
+                    path: null,
+                    distance: 0,
+                    metadata: {}
+                };
+                
+                if (algorithm === 'shortest') {
+                    const path = findShortestPath(graph, fromScene, toScene);
+                    
+                    if (path) {
+                        result = {
+                            success: true,
+                            path: path,
+                            distance: path.length - 1,
+                            metadata: includeMetadata ? {
+                                algorithm: 'shortest',
+                                graphSize: graph.size,
+                                totalConnections: Array.from(graph.values()).reduce((sum, arr) => sum + arr.length, 0)
+                            } : {}
+                        };
+                    }
+                } else if (algorithm === 'all') {
+                    const paths = findAllPaths(graph, fromScene, toScene, maxDepth);
+                    
+                    if (paths.length > 0) {
+                        // Sort by length to get shortest first
+                        paths.sort((a, b) => a.length - b.length);
+                        
+                        result = {
+                            success: true,
+                            path: paths[0], // Shortest path
+                            allPaths: paths,
+                            distance: paths[0].length - 1,
+                            metadata: includeMetadata ? {
+                                algorithm: 'all',
+                                totalPathsFound: paths.length,
+                                graphSize: graph.size,
+                                totalConnections: Array.from(graph.values()).reduce((sum, arr) => sum + arr.length, 0)
+                            } : {}
+                        };
+                    }
+                }
+                
+                return result;
+                
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message,
+                    path: null,
+                    distance: 0,
+                    metadata: {}
+                };
+            }
+        }
+
+        function buildSceneGraph(scenesData) {
+            const graph = new Map();
+            
+            // Get all scene IDs
+            const sceneIds = Object.keys(scenesData.scenes);
+            
+            // Initialize graph with empty arrays for each scene
+            sceneIds.forEach(sceneId => {
+                graph.set(sceneId, []);
+            });
+            
+            // Build connections based on navigation hotspots
+            sceneIds.forEach(sceneId => {
+                const scene = scenesData.scenes[sceneId];
+                
+                if (scene.hotSpots) {
+                    scene.hotSpots.forEach(hotspot => {
+                        // Only consider scene-type hotspots for navigation
+                        if (hotspot.type === "scene" && hotspot.sceneId) {
+                            // Add connection from current scene to target scene
+                            const connections = graph.get(sceneId) || [];
+                            if (!connections.includes(hotspot.sceneId)) {
+                                connections.push(hotspot.sceneId);
+                            }
+                            graph.set(sceneId, connections);
+                        }
+                    });
+                }
+            });
+            
+            return graph;
+        }
+
+        function findShortestPath(graph, startScene, endScene) {
+            if (startScene === endScene) {
+                return [startScene];
+            }
+            
+            if (!graph.has(startScene) || !graph.has(endScene)) {
+                console.warn(`Scene not found: ${!graph.has(startScene) ? startScene : endScene}`);
+                return null;
+            }
+            
+            const queue = [[startScene]]; // Queue of paths
+            const visited = new Set([startScene]);
+            
+            while (queue.length > 0) {
+                const currentPath = queue.shift();
+                const currentScene = currentPath[currentPath.length - 1];
+                
+                // Get all connected scenes
+                const neighbors = graph.get(currentScene) || [];
+                
+                for (const neighbor of neighbors) {
+                    if (neighbor === endScene) {
+                        // Found the target scene
+                        return [...currentPath, neighbor];
+                    }
+                    
+                    if (!visited.has(neighbor)) {
+                        visited.add(neighbor);
+                        queue.push([...currentPath, neighbor]);
+                    }
+                }
+            }
+            
+            // No path found
+            return null;
+        }
+
+        function findAllPaths(graph, startScene, endScene, maxDepth = 10) {
+            const allPaths = [];
+            
+            function dfs(currentPath, visited) {
+                const currentScene = currentPath[currentPath.length - 1];
+                
+                if (currentPath.length > maxDepth) {
+                    return;
+                }
+                
+                if (currentScene === endScene && currentPath.length > 1) {
+                    allPaths.push([...currentPath]);
+                    return;
+                }
+                
+                const neighbors = graph.get(currentScene) || [];
+                
+                for (const neighbor of neighbors) {
+                    if (!visited.has(neighbor)) {
+                        visited.add(neighbor);
+                        currentPath.push(neighbor);
+                        dfs(currentPath, visited);
+                        currentPath.pop();
+                        visited.delete(neighbor);
+                    }
+                }
+            }
+            
+            const visited = new Set([startScene]);
+            dfs([startScene], visited);
+            
+            return allPaths;
+        }
+
+        // Apply the path-based targeting logic to update the scene and hotspots
+       function applyPathBasedTargeting(pathResult, targetScene) {
+            if (!pathResult.success || !pathResult.path || pathResult.path.length === 0) {
+                console.warn("Invalid path result provided");
+                return false;
+            }
+            // make this function to work to matter of amount of levels 
+            const wholePath = pathResult.path;
+            let PartialRoutes = [];
+            let startLoc = wholePath["0"];
+            let currentLevel = wholePath[0].includes("4") ? "4": "3"; 
+            console.log('Start location is ', currentLevel);
+            let previouslocation = null;
+            let locationsList = [];
+            locationsList.push(startLoc);
+            for (const location of wholePath) {
+                
+                if (!location.includes(currentLevel)) {
+                    
+                    // console.log("ADding location: ", location)
+                    PartialRoutes.push(locationsList);
+                    locationsList = [];
+                    startLoc = location;
+                    previouslocation = null
+                    locationsList.push(startLoc);
+                    currentLevel = currentLevel == "4"? "3": "4";
+                    
+                } else {
+                    // console.log("Skip location: ", location)
+
+                }
+                if (previouslocation != null) {
+                locationsList.push(location);
+                }
+                previouslocation = location;
+
+            }
+
+            PartialRoutes.push(locationsList);
+            console.log("Key locations are: ", PartialRoutes);
+            let counter = 0 
+
+            if (PartialRoutes.length == 1 && PartialRoutes[0].length == 1) {
+                //case when in all routes there is only one route and it has one location
+                console.log("The user is already at the final destination, just turn the camera, targetScene is ", targetScene);
+                updateInitialPitchYaw(PartialRoutes[0][0], beforeTargetLocation, stairs = false, singleLocation = true);
+
+                setTimeout(() => {
+                        alert('🎉 You have reached your destination: ' + beforeTargetLocation + '!');
+                    }, 1000);
+                
+                
+                urlParams.mode = "explore";
+
+                console.log("CHANGING PANEL 1407");
+                updateNavigationPanel(urlParams, PartialRoutes[0][0]);
+                return false;
+            } else {
+
+            for (const partialRoute of PartialRoutes) {
+                const initialSceneId = partialRoute[0];
+                let anotherInitialSceneId = partialRoute[counter];
+                counter += 1;
+                const finalSceneId = partialRoute[partialRoute.length - 1];
+                if (initialSceneId == finalSceneId) {
+                    //in the routes at least one with 
+                    console.log("There is route with single location");
+                    if (counter < PartialRoutes.length) {
+                        console.log("This not the end, update to stairs ");
+                            updateInitialPitchYaw(initialSceneId, finalSceneId, stairs = true);
+                    }
+                    else {
+                        console.log("This is end, this is single location, update to final scene ", initialSceneId);
+                        //maybe not working, porbably
+                        // updateSceneHotspots(initialSceneId, finalSceneId);
+                        
+                        updateInitialPitchYaw(initialSceneId, beforeTargetLocation, stairs = false, singleLocation = true);
+                    }
+                }
+                else {
+                // if (anotherInitialSceneId = initialSceneId) {
+                //     console.log("This is another initial scene, update to stairs ", anotherInitisalSceneId);
+                //     updateInitialPitchYaw(anotherInitisalSceneId, finalSceneId, stairs = true);
+                // } else {
+                    console.log("This is initial scene ", initialSceneId);
+                    updateInitialPitchYaw(initialSceneId, finalSceneId, stairs = false);
+                // }
+                updateInitialPitchYaw(initialSceneId, finalSceneId);
+            // Update each scene's hotspots based on the next scene in the path
+                for (let i = 0; i < partialRoute.length; i++) {
+
+                    
+                    const currentSceneId = partialRoute[i];
+
+                    console.log("FInal location: ", finalSceneId);
+
+                   
+                    
+                    console.log(`Setting up transition: ${currentSceneId} → ${finalSceneId}`);
+                     updateSceneHotspots(currentSceneId, finalSceneId);
+                    
+                    if (partialRoute.length - 1 - i == 1) {
+                        if (counter < PartialRoutes.length) {
+                            console.log("WORKING WITH ", currentSceneId);
+                            const nextSceneId = partialRoute[i + 1];
+                            //means that there will be another route after stairs so need to target to stairs
+
+                            updateHotspotsToStairs(currentSceneId, nextSceneId);
+                        } else {
+                            console.log("This is one before final destination - ", currentSceneId, "and target location", finalSceneId);
+                            updateFinalSceneHotspots(currentSceneId, finalSceneId);
+                        }
+                    }
+
+                    if (partialRoute.length - i  == 1) {
+                        if (counter == PartialRoutes.length) {
+                            console.log("This is FFF final destination - ", currentSceneId);
+                            //need to turn camera to the object 
+                            updateInitialPitchYaw(currentSceneId, finalSceneId);
+                        } else if (counter < PartialRoutes.length) {
+                            console.log("This is not final destination - ", currentSceneId, "and target location", finalSceneId);
+                            console.log("1378 - turn to stairs ");
+                            updateInitialPitchYaw(currentSceneId, finalSceneId, stairs = true);
+                    }
+                }
+                    
+                    // Update hotspots for current scene to point toward next scene
+                    
+                    
+                    
+                    // // Set initial view direction for next scene when arriving from current scene
+                    // updateInitialViewForArrival(nextSceneId, currentSceneId, all_scenes);
+                    }
+                }
+            }
+        }
+
+            return true;
+        }
+
+        // Function to update hotspots for stairs transitions
+        function updateHotspotsToStairs(sceneId, nextSceneId) {
+            const scene = all_scenes.scenes[sceneId];
+            console.log("Scene is ", scene);
+            if (!scene || !scene.hotSpots) {
+                console.log("No scene");
+            };
+            scene.hotSpots.forEach(hotspot => {
+                if (hotspot.type === 'scene' && hotspot.sceneId) {
+                    const transition = StairsTransitions[nextSceneId];
+                    if (transition) {
+                        hotspot.targetYaw = transition.targetYaw;
+
+                        hotspot.targetPitch = transition.targetPitch;
+
+                        console.log(`Updated hotspot for ${sceneId} to stairs: yaw=${transition.targetYaw}, pitch=${transition.targetPitch}`);
+                    }
+                }
+            });
+
+        }
+               
+        // Function to update hotspot target values dynamically
+        function updateSceneHotspots(sceneId, TargetLocation) {
+            // const scene = viewer.getConfig().scenes[sceneId];
+            const scene = all_scenes.scenes[sceneId];
+            console.log("Scene is ", scene);
+            if (!scene || !scene.hotSpots) {
+                console.log("No scene");
+            };
+            
+            scene.hotSpots.forEach(hotspot => {
+                if (hotspot.type === 'scene' && hotspot.sceneId) {
+                    const transition = sceneTransitions[sceneId]?.[TargetLocation];
+                    if (transition) {
+                        hotspot.targetYaw = transition.targetYaw;
+                        hotspot.targetPitch = transition.targetPitch;
+
+                        console.log(`Updated hotspot for ${sceneId} to ${hotspot.sceneId} -> ${TargetLocation}: yaw=${transition.targetYaw}, pitch=${transition.targetPitch}`);
+                    }
+                }
+            });
+        }
+
+        function updateFinalSceneHotspots(sceneId, TargetLocation) {
+            if (TargetLocation != beforeTargetLocation) {
+                console.log("This is Update final scene function with", TargetLocation, " ", beforeTargetLocation);
+                
+                // Get the scene
+                const scene = all_scenes.scenes[sceneId];
+                console.log("Before final Scene is ", scene);
+                
+                // Update hotspots based on final scene transitions
+                scene.hotSpots.forEach(hotspot => {
+                    if (hotspot.type === 'scene' && hotspot.sceneId) {
+                        const transition = finalSceneTransitions[TargetLocation]?.[beforeTargetLocation];
+                        if (transition) {
+                            hotspot.targetYaw = transition.targetYaw;
+                            hotspot.targetPitch = transition.targetPitch;
+                            
+                            console.log(`Updated FINAL hotspot for ${sceneId} to ${hotspot.sceneId} -> ${TargetLocation}: yaw=${transition.targetYaw}, pitch=${transition.targetPitch}`);
+                        }
+                    }
+                });
+            } else {
+                updateSceneHotspots(sceneId, TargetLocation);
+            }
+        }
+
+        function updateInitialPitchYaw(sceneId, destination, stairs = false, singleLocation = false) {
+            let newYaw = 0;
+            let newPitch = 0;
+            if (singleLocation && sceneId != destination) {
+                console.log("Single location, updating pitch and yaw for scene:", sceneId, "with TargetLocation:", destination);
+                newYaw = finalSceneTransitions[sceneId]?.[destination]?.targetYaw || 0; // Default to 0 if not found
+                newPitch = finalSceneTransitions[sceneId]?.[destination]?.targetPitch || 0; // Default to 0 if not found
+                console.log(`Updating only pitch and yaw for scene: ${sceneId} to yaw: ${newYaw}, pitch: ${newPitch}`);
+
+            } else 
+            if (!stairs) {
+                console.log("Updating initial pitch and yaw for scene:", sceneId, "with TargetLocation:", destination);
+                newYaw = initialPitchYaw[sceneId]?.[destination]?.Yaw || 0; // Default to 0 if not found
+                newPitch = initialPitchYaw[sceneId]?.[destination]?.Pitch || 0; // Default to 0 if not found
+                console.log(`Updating initial pitch and yaw for scene: ${sceneId} to yaw: ${newYaw}, pitch: ${newPitch}`);
+                console.log("Scene data:", all_scenes['scenes'][sceneId]);
+                //assign the new yaw and pitch to the scene
+                
+            } else {
+                console.log("Stairs happen 1291");
+                console.log("Updating initial pitch and yaw for scene:", sceneId, "with TargetLocation:", destination);
+                newYaw = StairsTransitions[sceneId]?.targetYaw;
+                newPitch = StairsTransitions[sceneId]?.targetPitch;
+                console.log(`Updating initial pitch and yaw stairs : ${sceneId} to yaw: ${newYaw}, pitch: ${newPitch}`);
+
+
+            }
+
+            if (all_scenes['scenes'][sceneId]) {
+                    all_scenes['scenes'][sceneId]['yaw'] = newYaw;
+                    all_scenes['scenes'][sceneId]['pitch'] = newPitch;
+                } else {
+                    console.warn(`Scene ${sceneId} not found in all_scenes.`);
+                }
+
+           
+        }
+
+ 
+
+
+        function findRespondingStartLocation(beforeStartLocation) {
+            // If it's already a block level location (Level 3 or Level 4 blocks), return as is
+            const blockLevelLocations = [
+                'locationALevel3', 'locationBLevel3', 'locationDLevel3', 'locationELevel3',
+                'locationALevel4', 'locationBLevel4', 'locationDLevel4', 'locationELevel4',
+                'locationGymBilaMart3', 'locationLibrary4'
+            ];
+            
+            if (blockLevelLocations.includes(beforeStartLocation)) {
+                return beforeStartLocation;
+            }
+            
+            // Mapping for specific locations to their corresponding start locations
+            const locationMapping = {
+                // Reception -> Level 3 Block A
+                'locationReception3': 'locationALevel3',
+                
+                // Student Services -> Level 3 Block B
+                'locationStudentServices3': 'locationBLevel3',
+                
+                // Canteen, Atrium, Bursary -> Level 3 Block D
+                'locationCanteen3': 'locationDLevel3',
+                'locationAtrium3': 'locationDLevel3',
+                'locationBursary3': 'locationDLevel3',
+                
+                // Gym, Accommodations, Bila Bila Mart -> Level 3 Recreational Area
+                'locationGym3': 'locationGymBilaMart3',
+                'locationAccomadations3': 'locationGymBilaMart3',
+                'locationBilaMart3': 'locationGymBilaMart3',
+                
+                // Library -> Library (already a block level)
+                'locationLibrary4': 'locationLibrary4',
+                
+                // Admin, Clinic, Visa Center -> Level 4 Block A (assuming this mapping)
+                'locationAdmin4': 'locationAdminClinic4',
+                'locationClinic4': 'locationAdminClinic4',
+                'locationVisaCenter3': 'locationAdminClinic4'
+            };
+            
+            // Return the mapped location or the original if no mapping found
+            return locationMapping[beforeStartLocation] || beforeStartLocation;
+        }
+
+
+        // 1 Get all variables from URL
+        let urlParams = getUrlParams();
+        const beforeStartLocation = urlParams.start || 'locationALevel3'; // fallback to default
+        console.log("Before start location is:", beforeStartLocation);
+        const startLocation = findRespondingStartLocation(beforeStartLocation);
+        console.log("Start location is:", startLocation);
+        let beforeTargetLocation = urlParams.destination || null;     
+        console.log("Target location is:", beforeTargetLocation);
+        const TargetLocation = findRespondingStartLocation(beforeTargetLocation);
+        console.log("Target location is:", TargetLocation);
+
+
+
+        // 1.5 finish configuring of all variables 
+        const all_scenes = {};
+
+        all_inside_scenes = {...scenesLevel3, ...scenesLevel4 };
+
+        all_scenes.default = {
+                        "firstScene": startLocation, // Start at location 1
+                        "author": "APU Campus Navigation",
+                        "sceneFadeDuration": 1000,
+                        "autoLoad": true,
+                    },
+
+        all_scenes.scenes =  all_inside_scenes;
+
+
+        // 2. Configure the scenes if targetLocation exists
+
+        if (TargetLocation) {
+            const result = findOptimalRoute(startLocation, TargetLocation);
+            const path = result.path;
+            console.log("The path is found: ", path);
+            //need to apply changes to all hotspots
+            // here we alread call update initial and update for stairs
+            applyPathBasedTargeting(result, TargetLocation);
+
+        }
+
+        // 3. establish viewer
+        const viewer = pannellum.viewer('panorama', all_scenes);
+        currentScene = startLocation;
+        console.log(
+            "start location is:", startLocation, "and target location is:", TargetLocation
+        )
+        // Initialize current scene tracker
+        currentScene = startLocation
+        // Initialize navigation panel with current scene
+        updateNavigationPanel(urlParams, startLocation);
+        // Update hotspots for the initial scene
+        setTimeout(() => {
+            
+        }, 100);
+
+        // Update navigation panel and hotspots when scene changes
+        viewer.on('scenechange', function(sceneId) {
+            currentScene = sceneId;
+            console.log("Current scene is: ", currentScene);
+            updateNavigationPanel(urlParams, sceneId);
+        });
+
+        // Optional: Add success message when reaching destination
+        if (urlParams.destination) {
+            viewer.on('scenechange', function(sceneId) {
+                if (sceneId === TargetLocation) {
+                    setTimeout(() => {
+                        alert('🎉 You have reached your destination: ' + locationMap[sceneId] + '!');
+                    }, 1000);
+                urlParams.mode = "explore";
+
+                console.log("CHANGING PANEL 1407");
+                updateNavigationPanel(urlParams, currentScene);
+                }
+            });            
+        }
+
+ viewer.on('load', () => {
+    const renderContainer = document.querySelector('.pnlm-render-container');
+    if (!renderContainer) {
+        console.warn("Render container not found.");
+        return;
+    }
+    const hotspotDivs = renderContainer.querySelectorAll('.pnlm-hotspot-base');
+    console.log(`🎯 Found ${hotspotDivs.length} hotspot divs after scene load`);
+});
+    </script>
+

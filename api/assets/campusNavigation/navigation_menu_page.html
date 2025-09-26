@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Navigation</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --accent-primary: #6366f1;
+            --accent-secondary: #0ea5e9;
+            --accent-hover: #4f46e5;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-accent: #38bdf8;
+            --surface: rgba(255, 255, 255, 0.04);
+            --surface-hover: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.12);
+            --border-focus: rgba(99, 102, 241, 0.5);
+            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-heavy: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(14, 165, 233, 0.06) 0%, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .navigation-container {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 56px;
+            padding: 0 24px;
+            animation: fadeInDown 0.8s ease-out;
+            max-height: 170px;
+        }
+
+        .portal-icon {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 16px;
+            background: var(--accent-primary);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: var(--shadow-medium);
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .portal-icon::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: var(--accent-primary);
+            border-radius: 31px;
+            z-index: -1;
+            filter: blur(12px);
+            opacity: 0.4;
+        }
+
+        .main-title {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .navigation-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 0 8px;
+        }
+
+        .form-step {
+            background: var(--surface);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 20px 40px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(32px);
+        }
+
+        .form-step:nth-child(1) { animation-delay: 0.2s; }
+        .form-step:nth-child(2) { animation-delay: 0.4s; }
+        .form-step:nth-child(3) { animation-delay: 0.6s; }
+
+        .form-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-primary);
+            border-radius: 24px 24px 0 0;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .form-step:hover::before {
+            transform: scaleX(1);
+        }
+
+        .form-step:hover {
+            background: var(--surface-hover);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-heavy);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .step-number {
+            background: var(--accent-primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: var(--shadow-light);
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .step-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 15px;
+            padding-right: 56px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 20px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+
+
+        .select-input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            background: rgba(99, 102, 241, 0.04);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+            transform: none !important;
+            transition: none !important;
+            border-color: inherit !important;
+            background-color: inherit !important;
+        }
+
+        .select-input:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .select-input option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 16px;
+            font-weight: 500;
+        }
+
+        .select-input optgroup {
+            background: var(--bg-tertiary);
+            color: var(--text-accent);
+            font-weight: 600;
+            padding: 12px 0;
+        }
+
+        .explore-step {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .explore-step .step-number {
+            background: white;
+            color: var(--accent-primary);
+        }
+
+        .explore-step .step-title {
+            color: white;
+        }
+
+        .explore-step .step-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .explore-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        .explore-checkbox {
+            width: 24px;
+            height: 24px;
+            accent-color: white;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .explore-label {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+            flex: 1;
+        }
+
+        .submit-container {
+            padding: 0 8px;
+            margin-top: 16px;
+        }
+
+        .navigation-button {
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 20px;
+            padding: 24px 48px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: var(--shadow-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navigation-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.6s ease;
+        }
+
+        .navigation-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .navigation-button:hover::before {
+            left: 100%;
+        }
+
+        .navigation-button:active {
+            transform: translateY(-1px);
+        }
+
+        .destination-step {
+            opacity: 0.5;
+            pointer-events: none;
+            transition: all 0.6s ease;
+        }
+
+        .destination-step.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-secondary);
+            border-radius: 50%;
+            animation: float-particle 20s infinite linear;
+            opacity: 0.2;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(120px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            .navigation-container {
+                max-width: 100%;
+            }
+
+            .portal-header {
+                margin-bottom: 40px;
+                padding: 0 16px;
+            }
+
+            .portal-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+                border-radius: 24px;
+                margin-bottom: 28px;
+            }
+
+            .navigation-form {
+                gap: 24px;
+                padding: 0 4px;
+            }
+
+            .form-step {
+                padding: 32px 28px 10px;
+                border-radius: 20px;
+            }
+
+            .step-header {
+                gap: 16px;
+            }
+
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+                border-radius: 10px;
+            }
+
+            .step-title {
+                font-size: 1.375rem;
+            }
+
+            .step-description {
+                font-size: 0.95rem;
+                margin-bottom: 24px;
+            }
+
+            .select-input {
+                padding: 18px 20px;
+                padding-right: 52px;
+                font-size: 0.95rem;
+            }
+
+            .explore-content {
+                padding: 20px;
+                gap: 16px;
+            }
+
+            .explore-label {
+                font-size: 1rem;
+            }
+
+            .navigation-button {
+                padding: 20px 40px;
+                font-size: 1.125rem;
+                border-radius: 16px;
+            }
+
+            .submit-container {
+                padding: 0 4px;
+                margin-top: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .portal-header {
+                padding: 0 12px;
+            }
+
+            .form-step {
+                padding: 28px 24px;
+            }
+
+            .step-header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .step-number {
+                align-self: center;
+                margin-top: 0;
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .navigation-form {
+                gap: 20px;
+            }
+        }
+
+        .smaller-text {
+            font-size: 14px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 25%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+        <div class="particle" style="left: 55%; animation-delay: 9s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+        <div class="particle" style="left: 85%; animation-delay: 15s;"></div>
+    </div>
+
+    <div class="navigation-container">
+        <header class="portal-header">
+            <div class="portal-icon">🧭</div>
+            <h1 class="main-title">Campus Navigator</h1>
+            <p class="subtitle smaller-text">Your intelligent wayfinding companion for seamless campus navigation</p>
+        </header>
+
+        <form class="navigation-form" id="navigationForm">
+            <div class="form-step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h2 class="step-title">Current Location</h2>
+                        <p class="step-description smaller-text">Tell us where you're starting from so we can guide you effectively</p>
+                    </div>
+                </div>
+                
+                <div class="select-wrapper">
+                    <select class="select-input" id="startLocation" name="start" required>
+                        <option value="">Choose your starting point...</option>
+                        <optgroup label="📍 Select by Block & Level">
+                            <option value="locationALevel3">Level 3 Block A</option>
+                            <option value="locationBLevel3">Level 3 Block B</option>
+                            <option value="locationDLevel3">Level 3 Block D</option>
+                            <option value="locationELevel3">Level 3 Block E</option>
+                            <option value="locationGymBilaMart3">Level 3 Recreational Area</option>
+                            <option value="locationALevel4">Level 4 Block A</option>
+                            <option value="locationBLevel4">Level 4 Block B</option>
+                            <option value="locationDLevel4">Level 4 Block D</option>
+                            <option value="locationELevel4">Level 4 Block E</option>
+                        </optgroup>
+                        
+                        <optgroup label="🏢 Select by Location">
+                            <option value="locationReception3">Reception</option>
+                            <option value="locationStudentServices3">Student Services</option>
+                            <option value="locationBursary3">Bursary</option>
+                            <option value="locationCanteen3">Canteen</option>
+                            <option value="locationAtrium3">Atrium</option>
+                            <option value="locationGym3">Gym</option>
+                            <option value="locationAccomadations3">Accommodations</option>
+                            <option value="locationBilaMart3">Bila Bila Mart</option>
+                            <option value="locationLibrary4">Library</option>
+                            <option value="locationAdmin4">Admin</option>
+                            <option value="locationClinic4">Clinic</option>
+                            <option value="locationVisaCenter3">Visa Center</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-step destination-step" id="destinationStep">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h2 class="step-title">Destination</h2>
+                        <p class="step-description smaller-text">Select where you want to go for precise turn-by-turn directions</p>
+                    </div>
+                </div>
+                
+                <div class="select-wrapper">
+                    <select class="select-input" id="destination" name="destination">
+                        <option value="">Select your destination...</option>
+                        <optgroup label="📍 Select by Block & Level">
+                            <option value="locationALevel3">Level 3 Block A</option>
+                            <option value="locationBLevel3">Level 3 Block B</option>
+                            <option value="locationDLevel3">Level 3 Block D</option>
+                            <option value="locationELevel3">Level 3 Block E</option>
+                            <option value="locationGymBilaMart3">Level 3 Recreational Area</option>
+                            <option value="locationALevel4">Level 4 Block A</option>
+                            <option value="locationBLevel4">Level 4 Block B</option>
+                            <option value="locationDLevel4">Level 4 Block D</option>
+                            <option value="locationELevel4">Level 4 Block E</option>
+                        </optgroup>
+                        
+                        <optgroup label="🏢 Select by Location">
+                            <option value="locationLibrary4">Library</option>
+                            <option value="locationReception3">Reception</option>
+                            <option value="locationStudentServices3">Student Services</option>
+                            <option value="locationBursary3">Bursary</option>
+                            <option value="locationCanteen3">Canteen</option>
+                            <option value="locationAtrium3">Atrium</option>
+                            <option value="locationGym3">Gym</option>
+                            <option value="locationAccomadations3">Accommodations</option>
+                            <option value="locationBilaMart3">Bila Bila Mart</option>
+                            <option value="locationAdmin4">Admin</option>
+                            <option value="locationClinic4">Clinic</option>
+                            <option value="locationVisaCenter3">Visa Center</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-step explore-step">
+                <div class="step-header">
+                    <div class="step-number">✨</div>
+                    <div class="step-content">
+                        <h2 class="step-title">Explore Mode</h2>
+                        <p class="step-description smaller-text">Prefer to discover campus locations at your own pace? Enable exploration mode</p>
+                    </div>
+                </div>
+                
+                <div class="explore-content">
+                    <input type="checkbox" class="explore-checkbox" id="exploreMode" name="explore">
+                    <label for="exploreMode" class="explore-label">I want to explore the campus freely</label>
+                </div>
+            </div>
+        </form>
+
+        <div class="submit-container">
+            <button type="submit" class="navigation-button" form="navigationForm">
+                🚀 Begin Navigation
+            </button>
+        </div>
+    </div>
+
+    <script>
+
+        // Progressive form enhancement
+        const startLocation = document.getElementById('startLocation');
+        const destinationStep = document.getElementById('destinationStep');
+        const exploreMode = document.getElementById('exploreMode');
+
+        startLocation.addEventListener('change', function() {
+            if (this.value) {
+                destinationStep.classList.add('active');
+                setTimeout(() => {
+                    destinationStep.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 200);
+            } else {
+                destinationStep.classList.remove('active');
+            }
+        });
+
+        // Explore mode toggle
+        exploreMode.addEventListener('change', function() {
+            if (this.checked) {
+                startLocation.required = false;
+                destinationStep.style.opacity = '0.3';
+            } else {
+                startLocation.required = true;
+                if (destinationStep.classList.contains('active')) {
+                    destinationStep.style.opacity = '1';
+                } else {
+                    destinationStep.style.opacity = '0.5';
+                }
+            }
+        });
+
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (18 + Math.random() * 8) + 's';
+            document.querySelector('.particles').appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 30000);
+        }
+
+        setInterval(createParticle, 4000);
+        // Level 3 Location mapping - matches your location3_X format
+        const locationMap = {
+            "Block A Area": "locationALevel3",
+            "Block B Area": "locationBLevel3", 
+            "Block D Area": "locationDLevel3",
+            "Block E Area": "locationELevel3",
+            "Recreational Area": "locationGymBilaMart3",
+            
+            // Specific destinations for more granular navigation
+            "Block A": "loc3_blockA",
+            "Reception": "loc3_reception",
+            "Block B": "loc3_blockB",
+            "Student Services": "loc3_studentServices",
+            "Bankomat": "loc3_bankomat",
+            "Block D": "loc3_blockD",
+            "Bursary": "loc3_bursary",
+            "Canteen (Block D)": "loc3_canteen_blockD",
+            "Atrium (Block D)": "loc3_atrium_blockD",
+            "Block E": "loc3_blockE",
+            "Canteen (Block E)": "loc3_canteen_blockE",
+            "Atrium (Block E)": "loc3_atrium_blockE",
+            "Gym": "loc3_gym",
+            "Bila Bila": "loc3_bilaBila",
+            "University Accommodations": "loc3_uniAccommodations",
+            "Block A": "locationALevel4",
+            "Block B": "locationBLevel4", 
+            "Block D": "locationDLevel4",
+            "Admin and Clinic": "locationAdminClinic4",
+            "Between Admin and Clinic": "locationBetweenAdminClinic4",
+            "Block E": "locationELevel4",
+            "Library": "locationLibrary",
+            "Between Library and Block E": "locationBetweenLibraryBlockE4"
+        };
+
+        // Get DOM elements
+        const exploreCheckbox = document.getElementById('exploreMode');
+        const destinationSelect = document.getElementById('destination');
+        const navigationForm = document.getElementById('navigationForm');
+
+        // Handle explore mode checkbox
+        exploreCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                destinationSelect.disabled = true;
+                destinationSelect.value = '';
+                destinationSelect.style.opacity = '0.5';
+                
+                // Add visual indicator for explore mode
+                const label = document.querySelector('label[for="destination"]');
+                if (label) {
+                    label.style.color = '#6b7280';
+                    label.textContent = 'Choose Destination (Disabled in Explore Mode)';
+                }
+            } else {
+                destinationSelect.disabled = false;
+                destinationSelect.style.opacity = '1';
+                
+                // Restore normal label
+                const label = document.querySelector('label[for="destination"]');
+                if (label) {
+                    label.style.color = '';
+                    label.textContent = 'Choose Destination';
+                }
+            }
+        });
+
+        // Handle form submission
+        navigationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const startLocation = document.getElementById('startLocation').value;
+            let destination = document.getElementById('destination').value;
+            // destination = getReadableName(destination);
+        
+
+            console.log("start is :", startLocation);
+            console.log("destination is: ", destination);
+            const isExploreMode = exploreCheckbox.checked;
+            
+            // Validate start location is selected
+            if (!startLocation) {
+                alert('Please select a starting location.');
+                return;
+            }
+            
+            // Build URL parameters
+            let urlParams = `?start=${startLocation}&level=3`;
+            
+            if (isExploreMode) {
+                urlParams += '&mode=explore';
+            } else if (destination) {
+                urlParams += `&destination=${destination}`;
+            } else {
+                alert('Please select a destination or choose explore mode.');
+                return;
+            }
+            
+            // Log for debugging
+            console.log('Level 3 Navigation Parameters:', {
+                start: startLocation,
+                destination: destination || 'explore mode',
+                mode: isExploreMode ? 'explore' : 'navigation',
+                url: urlParams
+            });
+            
+            // Redirect to pannellum.html with parameters
+            window.location.href = `campus_navigation.html${urlParams}`;
+        });
+
+        
+       
+    </script>
+</body>
+</html>
