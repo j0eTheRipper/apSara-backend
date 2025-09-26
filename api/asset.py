@@ -62,3 +62,7 @@ def serve_images(filename):
         return resp
     except FileNotFoundError:
         return f"Image not found: {filename}", 404
+
+@assets_bp.route("/favicon.ico")
+def favicon():
+    return "", 204 # favicon is just annoying :ew:
