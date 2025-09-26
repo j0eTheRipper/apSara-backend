@@ -42,3 +42,23 @@ def serve_static(filename):
         return resp
     except FileNotFoundError:
         return f"File not found: {filename}", 404
+
+@assets_bp.route("/images_dev/<filename>")
+def serve_images(filename):
+    # Too many if statments, I don't like it
+    # too much work to create a mapper (and knowing myself I would probably overcomplicate it)
+    try:
+        images_dir = ASSETS_DIR / "images_dev"
+        resp = make_response(send_from_directory(images_dir, filename))
+        if filename.lower().endswith('.png'):
+            resp.headers['Content-Type'] = 'image/png'
+        elif filename.lower().endswith(('.jpg', '.jpeg')):
+            resp.headers['Content-Type'] = 'image/jpeg'
+        elif filename.lower().endswith('.gif'):
+            resp.headers['Content-Type'] = 'image/gif'
+        elif filename.lower().endswith('.webp'):
+            resp.headers['Content-Type'] = 'image/webp'
+
+        return resp
+    except FileNotFoundError:
+        return f"Image not found: {filename}", 404
