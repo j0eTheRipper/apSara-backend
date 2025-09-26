@@ -22,3 +22,23 @@ def navigation_menu_page():
 def campus_navigation():
     resp = make_response(send_from_directory(ASSETS_DIR, "campus_navigation.html"))
     return secure_asset(resp)
+
+@assets_bp.route("/<path:filename>")
+def serve_static(filename):
+    try:
+        resp = make_response(send_from_directory(ASSETS_DIR, filename))
+        if filename.endswith('.css'):
+            resp.headers['Content-Type'] = 'text/css'
+        elif filename.endswith('.js'):
+            resp.headers['Content-Type'] = 'application/javascript'
+        elif filename.endswith('.png'):
+            resp.headers['Content-Type'] = 'image/png'
+        elif filename.endswith(('.jpg', '.jpeg')):
+            resp.headers['Content-Type'] = 'image/jpeg'
+        elif filename.endswith('.gif'):
+            resp.headers['Content-Type'] = 'image/gif'
+        elif filename.endswith('.webp'):
+            resp.headers['Content-Type'] = 'image/webp'
+        return resp
+    except FileNotFoundError:
+        return f"File not found: {filename}", 404
