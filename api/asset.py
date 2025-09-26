@@ -5,10 +5,10 @@ assets_bp = Blueprint("assets", __name__, url_prefix="/asset")
 ASSETS_DIR = pathlib.Path(__file__).resolve().parent / "assets"
 
 def secure_asset(response: Response):
-    _ = response.headers.setdefault(
-        "Content-Security-Policy",
-        "default-src 'self'; img-src 'self' data:; script-src 'self' ; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"
-    )
+    # _ = response.headers.setdefault(
+    #   "Content-Security-Policy",
+    #   "default-src 'self'; img-src 'self' data:; script-src 'self' ; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"
+    # )
 
     return response
 
