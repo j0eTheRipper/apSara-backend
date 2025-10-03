@@ -1,0 +1,68 @@
+from flask import Blueprint, send_from_directory, make_response, Response
+import pathlib
+
+assets_bp = Blueprint("assets", __name__, url_prefix="/asset")
+ASSETS_DIR = pathlib.Path(__file__).resolve().parent / "assets" / "campusNavigation"
+
+def secure_asset(response: Response):
+    # _ = response.headers.setdefault(
+    #   "Content-Security-Policy",
+    #   "default-src 'self'; img-src 'self' data:; script-src 'self' ; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"
+    # )
+
+    return response
+
+
+@assets_bp.route("/navigation_menu_page.html")
+def navigation_menu_page():
+    resp = make_response(send_from_directory(ASSETS_DIR, "navigation_menu_page.html"))
+    return secure_asset(resp)
+
+@assets_bp.route("/campus_navigation.html")
+def campus_navigation():
+    resp = make_response(send_from_directory(ASSETS_DIR, "campus_navigation.html"))
+    return secure_asset(resp)
+
+@assets_bp.route("/<path:filename>")
+def serve_static(filename):
+    try:
+        resp = make_response(send_from_directory(ASSETS_DIR, filename))
+        if filename.endswith('.css'):
+            resp.headers['Content-Type'] = 'text/css'
+        elif filename.endswith('.js'):
+            resp.headers['Content-Type'] = 'application/javascript'
+        elif filename.endswith('.png'):
+            resp.headers['Content-Type'] = 'image/png'
+        elif filename.endswith(('.jpg', '.jpeg')):
+            resp.headers['Content-Type'] = 'image/jpeg'
+        elif filename.endswith('.gif'):
+            resp.headers['Content-Type'] = 'image/gif'
+        elif filename.endswith('.webp'):
+            resp.headers['Content-Type'] = 'image/webp'
+        return resp
+    except FileNotFoundError:
+        return f"File not found: {filename}", 404
+
+@assets_bp.route("/images_dev/<filename>")
+def serve_images(filename):
+    # Too many if statments, I don't like it
+    # too much work to create a mapper (and knowing myself I would probably overcomplicate it)
+    try:
+        images_dir = ASSETS_DIR / "images_dev"
+        resp = make_response(send_from_directory(images_dir, filename))
+        if filename.lower().endswith('.png'):
+            resp.headers['Content-Type'] = 'image/png'
+        elif filename.lower().endswith(('.jpg', '.jpeg')):
+            resp.headers['Content-Type'] = 'image/jpeg'
+        elif filename.lower().endswith('.gif'):
+            resp.headers['Content-Type'] = 'image/gif'
+        elif filename.lower().endswith('.webp'):
+            resp.headers['Content-Type'] = 'image/webp'
+
+        return resp
+    except FileNotFoundError:
+        return f"Image not found: {filename}", 404
+
+@assets_bp.route("/favicon.ico")
+def favicon():
+    return "", 204 # favicon is just annoying :ew:
